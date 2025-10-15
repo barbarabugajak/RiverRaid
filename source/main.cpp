@@ -13,7 +13,7 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
 	// Initalize video
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
-		std::cout << "Video did not initialized properly" << "\n";
+		std::cout << "Video did not initialize properly" << "\n";
 		return SDL_APP_FAILURE;
 	}
 	else {
