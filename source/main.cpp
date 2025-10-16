@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
 	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		std::cout << "Video did not initialize properly" << "\n";
-		std::cout << SDL_GetError();
+		std::cout << SDL_GetError() << "\n";
 		return SDL_APP_FAILURE;
 	}
 	else {
