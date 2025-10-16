@@ -1,65 +1,81 @@
-#define SDL_MAIN_USE_CALLBACKS 1  // use the callbacks instead of main()
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <iostream>
 
-// Create a variable for SDL window
-SDL_Window* window = NULL;
-// Create a variable for SDL renderer
-SDL_Renderer * renderer = NULL;
+int main(int argc, char* argv[]) {
 
-// Initialize subsystems & variables used
-SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
-{
-	// Initalize video
+	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		std::cout << "Video did not initialize properly" << "\n";
+		std::cout << SDL_GetError();
 		return SDL_APP_FAILURE;
 	}
 	else {
 		std::cout << "Video initialized" << "\n";
 	};
 
-	// Initalize window & renderer
-	if (!SDL_CreateWindowAndRenderer("Game", 720, 1280, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
-		std::cout << "Window and renderer creation falied" << "\n";
+
+	// Declare variables for window and renderer
+	SDL_Window* window = NULL;
+	SDL_Renderer* renderer = NULL;
+
+
+	// Create SDL window
+	window = SDL_CreateWindow("RiverRaid", 1280, 1440, 0);
+
+	if (!window) {
+		std::cout << "Window creation error" << "\n";
+		std::cout << SDL_GetError() << "\n";
 		return SDL_APP_FAILURE;
 	}
 	else {
-		std::cout << "Window and renderer created" << "\n";
+		std::cout << "Window created successfully" << "\n";;
 	}
 
-	return SDL_APP_CONTINUE;
-}
+	// Create SDL renderer
+	renderer = SDL_CreateRenderer(window, NULL);
 
-// Handle events
-SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
-	if (event->type == SDL_EVENT_QUIT) {
-		return SDL_APP_SUCCESS; // Terminate successfully if quit
+	if (!renderer) {
+		std::cout << SDL_GetError() << "\n";
+		return SDL_APP_FAILURE;
 	}
-	return SDL_APP_CONTINUE;
-}
+	else {
+		std::cout << "Renderer created successfully" << "\n";;
+	}
 
-float red = 0.1f, green = 0.5f, blue = 0.8f, alpha = 1.0f;
+	bool close = false;
+	float red = 0.1f, green = 0.5f, blue = 0.8f, alpha = 1.0f;
 
-// Game loop (Unreal's Tick(), Unity's Update())
-SDL_AppResult SDL_AppIterate(void* appstate) {
+	// Game loop
+	while (!close) {
 
-	// Set backround color
-	SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+		SDL_Event event;
 
-	// Clear screen
-	SDL_RenderClear(renderer);
+		// Event handler
+		while (SDL_PollEvent(&event) ) {
 
-	// Draw onscreen
-	SDL_RenderPresent(renderer);
+			// Quit event handler
+			if (event.type == SDL_EVENT_QUIT) {
+				close = true;
+				break;
+			}
+		}
 
-	return SDL_APP_CONTINUE;
+		// Set backround color
+		SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 
-}
+		// Clear screen
+		SDL_RenderClear(renderer);
 
-// This will fire once, on shutdown
-void SDL_AppQuit(void* appstate, SDL_AppResult result)
-{
-	// Automatic cleanup of the renderer and window
+		// Draw onscreen
+		SDL_RenderPresent(renderer);
+	}
+
+
+	// Shutdown
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+
+	return SDL_APP_SUCCESS;
 }
