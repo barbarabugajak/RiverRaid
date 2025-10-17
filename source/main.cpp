@@ -1,8 +1,14 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <SDL3/SDL_surface.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3_image/SDL_image.h>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
+
+	const int WIDTH = 1280;
+	const int HEIGHT = 1440;
 
 	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -19,9 +25,17 @@ int main(int argc, char* argv[]) {
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 
+	SDL_FRect r;
+
+	r.w = 200;
+	r.h = 200;
+
+	r.x = (WIDTH /2) - (r.w/2);
+	r.y = HEIGHT - 400;
+
 
 	// Create SDL window
-	window = SDL_CreateWindow("RiverRaid", 1280, 1440, 0);
+	window = SDL_CreateWindow("RiverRaid", WIDTH, HEIGHT, 0);
 
 	if (!window) {
 		std::cout << "Window creation error" << "\n";
@@ -43,8 +57,22 @@ int main(int argc, char* argv[]) {
 		std::cout << "Renderer created successfully" << "\n";;
 	}
 
+	SDL_Surface* plane = IMG_Load("C:\\Users\\basia\\Desktop\\RiverRaid\\source\\assets\\plane.png");
+	
+	if (!plane) {
+		std::cout << SDL_GetError();
+	}
+
+	SDL_Texture* texture_plane = SDL_CreateTextureFromSurface(renderer, plane);
+	
+	if (!texture_plane) {
+		std::cout << SDL_GetError();
+	}
+
+	SDL_DestroySurface(plane);
+
 	bool close = false;
-	float red = 0.1f, green = 0.5f, blue = 0.8f, alpha = 1.0f;
+	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
 
 	// Game loop
 	while (!close) {
@@ -61,18 +89,27 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+
 		// Set backround color
 		SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 
 		// Clear screen
-		SDL_RenderClear(renderer);
+		SDL_RenderClear(renderer); 
+
+		SDL_SetRenderDrawColor(renderer, 1, 1, 1, 1);
+		SDL_RenderTexture(renderer, texture_plane, NULL, &r);
+		
+		
 
 		// Draw onscreen
 		SDL_RenderPresent(renderer);
+
+
 	}
 
 
 	// Shutdown
+	SDL_DestroyTexture(texture_plane);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
