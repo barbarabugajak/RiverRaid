@@ -4,8 +4,11 @@
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3_image/SDL_image.h>
+#include <SDL3/SDL_keycode.h>
 // Project headers
-#include "../textures.h"
+#include "../source/textures.h"
+#include "../source/gameObject.h"
+
 // Generic
 #include <iostream>
 
@@ -28,15 +31,6 @@ int main(int argc, char* argv[]) {
 	// Declare variables for window and renderer
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
-
-	SDL_FRect r;
-
-	r.w = 200;
-	r.h = 200;
-
-	r.x = (WIDTH /2) - (r.w/2);
-	r.y = HEIGHT - 400;
-
 
 	// Create SDL window
 	window = SDL_CreateWindow("RiverRaid", WIDTH, HEIGHT, 0);
@@ -61,7 +55,9 @@ int main(int argc, char* argv[]) {
 		std::cout << "Renderer created successfully" << "\n";;
 	}
 
-	SDL_Texture* plane = CreateTextureFromPNG("source/assets/plane.png", renderer);
+	GameObject plane("plane", "source/assets/plane.png", renderer, 0, 0, 200, 200, 8);
+	plane.rectangle->x = (WIDTH / 2) - (plane.rectangle->w / 2);
+	plane.rectangle->y = HEIGHT - 400;
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
@@ -80,9 +76,21 @@ int main(int argc, char* argv[]) {
 				break;
 			}
 
+			if (event.type == SDL_EVENT_KEY_DOWN) {
+
+				switch (event.key.key) {
+					case SDLK_D:
+						plane.MoveX(1);
+						break;
+					case SDLK_A:
+						plane.MoveX(-1);
+						break;
+				}
+				
+			}
+
 			
 		}
-
 
 		// Set backround color
 		SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
@@ -91,19 +99,16 @@ int main(int argc, char* argv[]) {
 		SDL_RenderClear(renderer); 
 
 		SDL_SetRenderDrawColor(renderer, 1, 1, 1, 1);
-		SDL_RenderTexture(renderer, plane, NULL, &r);
+		SDL_RenderTexture(renderer, plane.texture, NULL, plane.rectangle);
 		
-		
-
 		// Draw onscreen
 		SDL_RenderPresent(renderer);
-
 
 	}
 
 
 	// Shutdown
-	SDL_DestroyTexture(plane);
+	SDL_DestroyTexture(plane.texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
