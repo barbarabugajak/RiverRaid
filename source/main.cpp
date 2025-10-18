@@ -1,8 +1,12 @@
+// SDL
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3_image/SDL_image.h>
+// Project headers
+#include "../textures.h"
+// Generic
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -57,19 +61,7 @@ int main(int argc, char* argv[]) {
 		std::cout << "Renderer created successfully" << "\n";;
 	}
 
-	SDL_Surface* plane = IMG_Load("C:\\Users\\basia\\Desktop\\RiverRaid\\source\\assets\\plane.png");
-	
-	if (!plane) {
-		std::cout << SDL_GetError();
-	}
-
-	SDL_Texture* texture_plane = SDL_CreateTextureFromSurface(renderer, plane);
-	
-	if (!texture_plane) {
-		std::cout << SDL_GetError();
-	}
-
-	SDL_DestroySurface(plane);
+	SDL_Texture* plane = CreateTextureFromPNG("source/assets/plane.png", renderer);
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
@@ -87,6 +79,8 @@ int main(int argc, char* argv[]) {
 				close = true;
 				break;
 			}
+
+			
 		}
 
 
@@ -97,7 +91,7 @@ int main(int argc, char* argv[]) {
 		SDL_RenderClear(renderer); 
 
 		SDL_SetRenderDrawColor(renderer, 1, 1, 1, 1);
-		SDL_RenderTexture(renderer, texture_plane, NULL, &r);
+		SDL_RenderTexture(renderer, plane, NULL, &r);
 		
 		
 
@@ -109,7 +103,7 @@ int main(int argc, char* argv[]) {
 
 
 	// Shutdown
-	SDL_DestroyTexture(texture_plane);
+	SDL_DestroyTexture(plane);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
