@@ -2,7 +2,9 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 #include "../source/textures.h"
+#include "../source/globals.h"
 #include <iostream>
+
 
 class GameObject {
 
@@ -37,7 +39,14 @@ public:
 	};
 
 	void MoveX(int value) {
-		rectangle->x += value*speedX;
+		// Input bounds
+		if (value < 0) {
+			rectangle->x = std::max(rectangle->x + (value * speedX), static_cast<float>(WIDTH/4));
+		} 
+		if (value > 0) {
+			rectangle->x = std::min(rectangle->x + (value * speedX), static_cast<float>(WIDTH - (WIDTH / 4) - (rectangle->w)));
+		}
+		
 	}
 };
 

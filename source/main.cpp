@@ -8,14 +8,14 @@
 // Project headers
 #include "../source/textures.h"
 #include "../source/gameObject.h"
+#include "../source/enviro.h"
+#include "../source/globals.h"
 
 // Generic
 #include <iostream>
 
 int main(int argc, char* argv[]) {
 
-	const int WIDTH = 1280;
-	const int HEIGHT = 1440;
 
 	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -54,13 +54,16 @@ int main(int argc, char* argv[]) {
 	else {
 		std::cout << "Renderer created successfully" << "\n";;
 	}
-
+	
 	GameObject plane("plane", "source/assets/plane.png", renderer, 0, 0, 200, 200, 8);
 	plane.rectangle->x = (WIDTH / 2) - (plane.rectangle->w / 2);
 	plane.rectangle->y = HEIGHT - 400;
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
+
+	// Initialize enviro
+	PrepareEnviro();
 
 	// Game loop
 	while (!close) {
@@ -98,9 +101,12 @@ int main(int argc, char* argv[]) {
 		// Clear screen
 		SDL_RenderClear(renderer); 
 
-		SDL_SetRenderDrawColor(renderer, 1, 1, 1, 1);
+		// Render plane
 		SDL_RenderTexture(renderer, plane.texture, NULL, plane.rectangle);
-		
+
+		// Enviro
+		DrawEnviro(renderer);
+
 		// Draw onscreen
 		SDL_RenderPresent(renderer);
 
