@@ -38,15 +38,18 @@ public:
 		}
 	};
 
-	void MoveX(int value) {
-		// Input bounds
-		if (value < 0) {
-			rectangle->x = std::max(rectangle->x + (value * speedX), static_cast<float>(WIDTH/4));
-		} 
-		if (value > 0) {
-			rectangle->x = std::min(rectangle->x + (value * speedX), static_cast<float>(WIDTH - (WIDTH / 4) - (rectangle->w)));
-		}
-		
+	const void Render(SDL_Renderer* renderer) {
+
+		SDL_RenderTexture(renderer, texture, NULL, rectangle);
+	}
+
+	const void Destroy() {
+		SDL_DestroyTexture(texture);
+	}
+
+	// Happens every game loop
+	virtual void Tick() {
+
 	}
 };
 

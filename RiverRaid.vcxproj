@@ -25,8 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="source\bullet.h" />
     <ClInclude Include="source\enviro.h" />
     <ClInclude Include="source\globals.h" />
+    <ClInclude Include="source\plane.h" />
     <ClInclude Include="source\textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
