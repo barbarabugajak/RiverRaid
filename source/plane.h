@@ -32,9 +32,7 @@ public:
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullet newBullet("b", "source/assets/bullet.png", renderer, rectangle->x + rectangle->w / 2, rectangle->y - 100, 25, 100, 10);
-		Bullets.push_back(newBullet);
-
+		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, rectangle->x + rectangle->w / 2, rectangle->y - 100, 25, 100, 10));
 	}
 
 	// Happens every game loop

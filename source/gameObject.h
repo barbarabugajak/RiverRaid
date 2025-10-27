@@ -4,6 +4,7 @@
 #include "../source/textures.h"
 #include "../source/globals.h"
 #include <iostream>
+#include <cassert>
 
 
 class GameObject {
@@ -32,6 +33,8 @@ public:
 		speedX = speedVal;
 
 		texture = CreateTextureFromPNG(path_to_texture, renderer);
+
+		assert(texture);
 
 		if (!texture) {
 			std::cout << SDL_GetError() << "\n";

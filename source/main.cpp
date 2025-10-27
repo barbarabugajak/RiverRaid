@@ -62,8 +62,6 @@ int main(int argc, char* argv[]) {
 	plane.rectangle->x = (WIDTH / 2) - (plane.rectangle->w / 2);
 	plane.rectangle->y = HEIGHT - 400;
 
-	// Bullet bullet("b", "source/assets/bullet.png", renderer, 500, 700, 25, 100, 10);
-
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
 
@@ -86,6 +84,7 @@ int main(int argc, char* argv[]) {
 				close = true;
 				break;
 			}
+			
 
 			if (event.type == SDL_EVENT_KEY_DOWN) {
 
@@ -111,8 +110,21 @@ int main(int argc, char* argv[]) {
 		
 		if (currentTime > lastTickTime + 1000) {
 
+			// Logic
+
+			// Update bullets
+			for (int i = plane.Bullets.size() - 1; i >= 0; i--) {
+				plane.Bullets[i].Tick();
+
+				if (!plane.Bullets[i].CheckBounds()) {
+					plane.Bullets.erase(plane.Bullets.begin() + i);
+				}
+			}
+
+			// Rendering
+
 			// Set backround color
-			SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+			SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
 
 			// Clear screen
 			SDL_RenderClear(renderer);
@@ -121,21 +133,9 @@ int main(int argc, char* argv[]) {
 			plane.Render(renderer);
 
 			// Render bullets
-			std::vector<Bullet>::iterator it = plane.Bullets.begin();
-
-			while (it != plane.Bullets.end()) {
-
-				it->Render(renderer);
-				it->Tick();
-				if (!it->CheckBounds()) {
-					it->Destroy();
-					it = plane.Bullets.erase(it);
-					continue;
-				}
-				it++;
+			for (int i = 0; i < plane.Bullets.size(); i++) {
+				plane.Bullets[i].Render(renderer);
 			}
-
-			
 
 			// Enviro
 			DrawEnviro(renderer);
