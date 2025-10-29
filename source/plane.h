@@ -30,26 +30,53 @@ class Plane : public GameObject {
 
 	}
 
+	void GetMovementInput() {
+
+		const bool* key_states = SDL_GetKeyboardState(NULL);
+
+		if (key_states[SDL_SCANCODE_D]) {
+			velX = 1.0f;
+		}
+
+		if (key_states[SDL_SCANCODE_A]) {
+			velX = -1.0f;
+		}
+
+		if (!(key_states[SDL_SCANCODE_A] || key_states[SDL_SCANCODE_D])) {
+			velX = 0;
+		}
+
+		// They cancel out 
+		if ((key_states[SDL_SCANCODE_A] && key_states[SDL_SCANCODE_D])) {
+			velX = 0;
+		}
+
+		if (key_states[SDL_SCANCODE_SPACE]) {
+			isShooting = true;
+		}
+		else {
+			isShooting = false;
+		}
+	}
+
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2, sprite->y - 50, 10, 50, 0, 2));
+		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2, sprite->y - 50, 10, 50, 0, 5));
 	}
 
 	// Happens every game loop
 	virtual void Tick() override {
+
+		GetMovementInput();
 		MoveX();
 
 		if (isShooting && shootDelay <= 0) {
 			Shoot(renderer);
-			shootDelay = 100;
+			shootDelay = 10;
 		}
-
-		// This'll work irregularily for now, due to time-frame differences
-		// It's here so that State-Driven could be properly tested
-		// TOFIX
+		
 		if (shootDelay > 0) shootDelay--;
-
 	}
 
 };

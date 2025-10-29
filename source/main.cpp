@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 	assert(window);
 	assert(renderer);
 	
-	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 1, 0);
+	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 5, 0);
 	plane.velX = 0;
 	plane.sprite->x = (WIDTH / 2) - (plane.sprite->w / 2);
 	plane.sprite->y = HEIGHT - 200;
@@ -46,62 +46,36 @@ int main(int argc, char* argv[]) {
 	PrepareEnviro();
 
 	// Tick handlers
-	unsigned int lastTickTime = 0, currentTime;
+	unsigned int last = SDL_GetPerformanceCounter();
+	const float targetFrameTime = 1.0f / 60.0f;
+	float accumulator = 0;
+
+	// FPS counters
+	Uint32 startTime = SDL_GetTicks();
+	int frameCount = 0;
 
 	// Game loop
 	while (!close) {
 
 		SDL_Event event;
 
-		// Event handler
-		while (SDL_PollEvent(&event) ) {
+		// Event pump
+		while (SDL_PollEvent(&event)) {
 
 			// Quit event handler
 			if (event.type == SDL_EVENT_QUIT) {
 				close = true;
 				break;
 			}
-			
+		}		
 
-			if (event.type == SDL_EVENT_KEY_DOWN) {
-
-				switch (event.key.key) {
-					case SDLK_SPACE:
-						plane.isShooting = true;
-						break;
-					case SDLK_D:
-						plane.velX = 1;
-						break;
-					case SDLK_A:
-						plane.velX = -1;
-						break;
-				}
-				
-			}
-
-			if (event.type == SDL_EVENT_KEY_UP) {
-
-				switch (event.key.key) {
-					case SDLK_SPACE:
-						plane.isShooting = false;
-						break;
-					case SDLK_D:
-						plane.velX = 0;
-						break;
-					case SDLK_A:
-						plane.velX = 0;
-						break;
-					}
-
-			}
-
-			
-		}
-
-		// Tick, every second
-		currentTime = SDL_GetTicks();
+		// Frame-rate controllers
+		unsigned int now = SDL_GetPerformanceCounter();
+		float diff = (float)(now - last) / SDL_GetPerformanceFrequency();
+		last = now;
+		accumulator += diff;
 		
-		if (currentTime > lastTickTime + 1000) {
+		while (accumulator >= targetFrameTime) {
 
 			// Logic
 			plane.Tick();
@@ -136,11 +110,23 @@ int main(int argc, char* argv[]) {
 			// Draw onscreen
 			SDL_RenderPresent(renderer);
 
+			accumulator -= targetFrameTime;
 
+			int currentTime = SDL_GetTicks();
+			float elapsedTime = (currentTime - startTime) / 1000.0f;
+			frameCount++;
+
+			if (elapsedTime >= 1.0f) {
+				float fps = frameCount / elapsedTime;
+				std::cout << "FPS: " << fps << "\n";
+
+				frameCount = 0;
+				startTime = currentTime;
+			}
 		}
 
 		
-
+		
 	}
 
 

@@ -40,12 +40,7 @@ public:
 		velY = speedY;
 
 		texture = CreateTextureFromPNG(path_to_texture, renderer);
-
-		assert(texture);
-
-		if (!texture) {
-			std::cout << SDL_GetError() << "\n";
-		}
+		
 	};
 
 	const void Render(SDL_Renderer* renderer) {
