@@ -11,23 +11,20 @@ class Bullet : public GameObject {
 public:
 
 	using GameObject::GameObject;
-
-	int speedY = 2;
-
-
+	
 	void MoveY(int value) {
 		// Y-Axis Input bounds
-		rectangle->y += value * speedY;
+		sprite->y += value * speedY;
 	}
 
 	bool CheckBounds() {
-		return (rectangle->y < WIDTH) && (rectangle->y > 0.0f - rectangle->h/2);
+		return ((sprite->y - sprite->h) < HEIGHT) && (sprite->y > 0.0f - sprite->h/2);
 	}
 
 	// Happens every game loop
 	virtual void Tick() override {
 
-		MoveY(-1);
+		MoveY(-velY);
 
 	}
 

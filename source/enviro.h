@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 
 void PrepareEnviro();
-void DrawEnviro(SDL_Renderer* renderer);
+void DrawEnviro();
 
 // Enviro objects
 extern SDL_FRect grass_L;

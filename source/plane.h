@@ -10,21 +10,22 @@
 
 class Plane : public GameObject {
 
-public:
+	public:
 
-	using GameObject::GameObject;
+		using GameObject::GameObject;
+		std::vector<Bullet> Bullets;
 
-	int speedY = 2;
-	std::vector<Bullet> Bullets;
+		bool isShooting;
+		int shootDelay = 0;
 
 
-	void MoveX(int value) {
+	void MoveX() {
 		// X-Axis Input bounds
-		if (value < 0) {
-			rectangle->x = std::max(rectangle->x + (value * speedX), static_cast<float>(WIDTH / 4));
+		if (velX < 0) {
+			sprite->x = std::max(sprite->x + (velX * speedX), (WIDTH / 4.0f));
 		}
-		if (value > 0) {
-			rectangle->x = std::min(rectangle->x + (value * speedX), static_cast<float>(WIDTH - (WIDTH / 4) - (rectangle->w)));
+		if (velX > 0) {
+			sprite->x = std::min(sprite->x + (velX * speedX), (WIDTH - (WIDTH / 4.0f) - (sprite->w)));
 		}
 
 	}
@@ -32,12 +33,22 @@ public:
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, rectangle->x + rectangle->w / 2, rectangle->y - 100, 25, 100, 10));
+		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2, sprite->y - 50, 10, 50, 0, 2));
 	}
 
 	// Happens every game loop
 	virtual void Tick() override {
+		MoveX();
 
+		if (isShooting && shootDelay <= 0) {
+			Shoot(renderer);
+			shootDelay = 100;
+		}
+
+		// This'll work irregularily for now, due to time-frame differences
+		// It's here so that State-Driven could be properly tested
+		// TOFIX
+		if (shootDelay > 0) shootDelay--;
 
 	}
 

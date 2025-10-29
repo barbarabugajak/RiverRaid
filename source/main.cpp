@@ -19,7 +19,6 @@
 
 int main(int argc, char* argv[]) {
 
-
 	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		std::cout << "Video did not initialize properly" << "\n";
@@ -32,35 +31,13 @@ int main(int argc, char* argv[]) {
 
 
 	// Declare variables for window and renderer
-	SDL_Window* window = NULL;
-	SDL_Renderer* renderer = NULL;
-
-	// Create SDL window
-	window = SDL_CreateWindow("RiverRaid", WIDTH, HEIGHT, 0);
-
-	if (!window) {
-		std::cout << "Window creation error" << "\n";
-		std::cout << SDL_GetError() << "\n";
-		return SDL_APP_FAILURE;
-	}
-	else {
-		std::cout << "Window created successfully" << "\n";;
-	}
-
-	// Create SDL renderer
-	renderer = SDL_CreateRenderer(window, NULL);
-
-	if (!renderer) {
-		std::cout << SDL_GetError() << "\n";
-		return SDL_APP_FAILURE;
-	}
-	else {
-		std::cout << "Renderer created successfully" << "\n";;
-	}
+	assert(window);
+	assert(renderer);
 	
-	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 200, 200, 8);
-	plane.rectangle->x = (WIDTH / 2) - (plane.rectangle->w / 2);
-	plane.rectangle->y = HEIGHT - 400;
+	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 1, 0);
+	plane.velX = 0;
+	plane.sprite->x = (WIDTH / 2) - (plane.sprite->w / 2);
+	plane.sprite->y = HEIGHT - 200;
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
@@ -90,16 +67,32 @@ int main(int argc, char* argv[]) {
 
 				switch (event.key.key) {
 					case SDLK_SPACE:
-						plane.Shoot(renderer);
+						plane.isShooting = true;
 						break;
 					case SDLK_D:
-						plane.MoveX(1);
+						plane.velX = 1;
 						break;
 					case SDLK_A:
-						plane.MoveX(-1);
+						plane.velX = -1;
 						break;
 				}
 				
+			}
+
+			if (event.type == SDL_EVENT_KEY_UP) {
+
+				switch (event.key.key) {
+					case SDLK_SPACE:
+						plane.isShooting = false;
+						break;
+					case SDLK_D:
+						plane.velX = 0;
+						break;
+					case SDLK_A:
+						plane.velX = 0;
+						break;
+					}
+
 			}
 
 			
@@ -111,7 +104,7 @@ int main(int argc, char* argv[]) {
 		if (currentTime > lastTickTime + 1000) {
 
 			// Logic
-
+			plane.Tick();
 			// Update bullets
 			for (int i = plane.Bullets.size() - 1; i >= 0; i--) {
 				plane.Bullets[i].Tick();
@@ -138,7 +131,7 @@ int main(int argc, char* argv[]) {
 			}
 
 			// Enviro
-			DrawEnviro(renderer);
+			DrawEnviro();
 
 			// Draw onscreen
 			SDL_RenderPresent(renderer);

@@ -24,7 +24,7 @@ void PrepareEnviro() {
 }
 
 
-void DrawEnviro(SDL_Renderer* renderer) {
+void DrawEnviro() {
 
 	SDL_SetRenderDrawColor(renderer, 0, 120, 0, 1);
 	SDL_RenderFillRect(renderer, &grass_L);

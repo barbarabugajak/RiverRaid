@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\enviro.cpp" />
+    <ClCompile Include="source\globals.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\textures.cpp" />
   </ItemGroup>
