@@ -12,7 +12,7 @@ public:
 
 	using GameObject::GameObject;
 	
-	void MoveY(int value) {
+	void MoveY(float value) {
 		// Y-Axis Input bounds
 		sprite->y += value * speedY;
 	}

@@ -15,14 +15,14 @@ public:
 	SDL_Texture* texture;
 	float velX = 0;
 	float velY = 0;
-	int speedX;
-	int speedY;
+	float speedX;
+	float speedY;
 
 	GameObject(
 		const char* objectName,
 		const char* path_to_texture,
 		SDL_Renderer* renderer,
-		float x, float y, float w, float h, int speedValX, int speedValY) {
+		float x, float y, float w, float h, float speedValX, float speedValY) {
 
 		name = objectName;
 

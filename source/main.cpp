@@ -46,12 +46,12 @@ int main(int argc, char* argv[]) {
 	PrepareEnviro();
 
 	// Tick handlers
-	unsigned int last = SDL_GetPerformanceCounter();
+	Uint64 last = SDL_GetPerformanceCounter();
 	const float targetFrameTime = 1.0f / 60.0f;
 	float accumulator = 0;
 
 	// FPS counters
-	Uint32 startTime = SDL_GetTicks();
+	Uint64 startTime = SDL_GetTicks();
 	int frameCount = 0;
 
 	// Game loop
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 		}		
 
 		// Frame-rate controllers
-		unsigned int now = SDL_GetPerformanceCounter();
+		Uint64 now = SDL_GetPerformanceCounter();
 		float diff = (float)(now - last) / SDL_GetPerformanceFrequency();
 		last = now;
 		accumulator += diff;
@@ -80,11 +80,13 @@ int main(int argc, char* argv[]) {
 			// Logic
 			plane.Tick();
 			// Update bullets
-			for (int i = plane.Bullets.size() - 1; i >= 0; i--) {
+			for (size_t i = plane.Bullets.size(); i-- > 0;) { // equivalent to (i--; i > 0). Need to decrement first due to bounds
+
 				plane.Bullets[i].Tick();
 
 				if (!plane.Bullets[i].CheckBounds()) {
 					plane.Bullets.erase(plane.Bullets.begin() + i);
+			
 				}
 			}
 
@@ -112,7 +114,7 @@ int main(int argc, char* argv[]) {
 
 			accumulator -= targetFrameTime;
 
-			int currentTime = SDL_GetTicks();
+			Uint64 currentTime = SDL_GetTicks();
 			float elapsedTime = (currentTime - startTime) / 1000.0f;
 			frameCount++;
 
