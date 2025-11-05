@@ -13,12 +13,12 @@ void PrepareEnviro() {
 	// Prepare grass
 	grass_L.x = 0;
 	grass_L.y = 0;
-	grass_L.w = WIDTH / 4;
+	grass_L.w = WIDTH / 6;
 	grass_L.h = HEIGHT;
 
-	grass_R.x = WIDTH - WIDTH / 4;
+	grass_R.x = WIDTH - WIDTH / 6;
 	grass_R.y = 0;
-	grass_R.w = WIDTH / 4;
+	grass_R.w = WIDTH / 6;
 	grass_R.h = HEIGHT;
 
 }

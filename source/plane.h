@@ -22,10 +22,10 @@ class Plane : public GameObject {
 	void MoveX() {
 		// X-Axis Input bounds
 		if (velX < 0) {
-			sprite->x = std::max(sprite->x + (velX * speedX), (WIDTH / 4.0f));
+			sprite->x = std::max(sprite->x + (velX * speedX), (WIDTH / 6.0f));
 		}
 		if (velX > 0) {
-			sprite->x = std::min(sprite->x + (velX * speedX), (WIDTH - (WIDTH / 4.0f) - (sprite->w)));
+			sprite->x = std::min(sprite->x + (velX * speedX), (WIDTH - (WIDTH / 6.0f) - (sprite->w)));
 		}
 
 	}
@@ -62,7 +62,7 @@ class Plane : public GameObject {
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullets.push_back(Bullet("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2, sprite->y - 50, 10, 50, 0, 5));
+		Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2.f, sprite->y - 50.f, 10.f, 50.f, 0.f, 5.f);
 	}
 
 	// Happens every game loop

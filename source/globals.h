@@ -5,3 +5,5 @@ const int HEIGHT = 1080;
 
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
+
+void SetupWindowAndRenderer();

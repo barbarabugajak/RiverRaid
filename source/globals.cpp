@@ -4,5 +4,14 @@
 #include "../source/globals.h"
 #include <cassert>
 
-SDL_Window* window = SDL_CreateWindow("RiverRaid", WIDTH, HEIGHT, 0);
-SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+
+SDL_Window* window = NULL;
+SDL_Renderer* renderer = NULL;
+
+void SetupWindowAndRenderer() {
+
+	window = SDL_CreateWindow("RiverRaid", WIDTH, HEIGHT, 0);
+	renderer = SDL_CreateRenderer(window, NULL);
+
+}
+

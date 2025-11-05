@@ -12,6 +12,8 @@
 #include "../source/globals.h"
 #include "../source/bullet.h"
 #include "../source/plane.h"
+#include "../source/enemy.h"
+#include "../source/gameState.h"
 
 // Generic
 #include <iostream>
@@ -29,12 +31,15 @@ int main(int argc, char* argv[]) {
 		std::cout << "Video initialized" << "\n";
 	};
 
+	SetupWindowAndRenderer();
+
 
 	// Declare variables for window and renderer
 	assert(window);
 	assert(renderer);
 	
 	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 5, 0);
+
 	plane.velX = 0;
 	plane.sprite->x = (WIDTH / 2) - (plane.sprite->w / 2);
 	plane.sprite->y = HEIGHT - 200;
@@ -74,6 +79,9 @@ int main(int argc, char* argv[]) {
 		float diff = (float)(now - last) / SDL_GetPerformanceFrequency();
 		last = now;
 		accumulator += diff;
+
+		// Temporary here for tests
+		// Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 300, 100, 75, 30, 0);
 		
 		while (accumulator >= targetFrameTime) {
 
@@ -85,6 +93,7 @@ int main(int argc, char* argv[]) {
 				plane.Bullets[i].Tick();
 
 				if (!plane.Bullets[i].CheckBounds()) {
+					
 					plane.Bullets.erase(plane.Bullets.begin() + i);
 			
 				}
@@ -100,6 +109,9 @@ int main(int argc, char* argv[]) {
 
 			// Render plane
 			plane.Render(renderer);
+
+			// Render enemies
+			// enemy.Render(renderer);
 
 			// Render bullets
 			for (int i = 0; i < plane.Bullets.size(); i++) {
@@ -131,9 +143,7 @@ int main(int argc, char* argv[]) {
 		
 	}
 
-
 	// Shutdown
-	SDL_DestroyTexture(plane.texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
