@@ -25,10 +25,10 @@
     <ClCompile Include="source\textures.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameObject.h" />
     <ClInclude Include="source\bullet.h" />
     <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\enviro.h" />
+    <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\gameState.h" />
     <ClInclude Include="source\globals.h" />
     <ClInclude Include="source\plane.h" />

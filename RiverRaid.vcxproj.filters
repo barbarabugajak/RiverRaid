@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameObject.h">
-      <Filter>Pliki źródłowe</Filter>
-    </ClInclude>
     <ClInclude Include="source\textures.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
@@ -51,6 +48,9 @@
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
     <ClInclude Include="source\gameState.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gameObject.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

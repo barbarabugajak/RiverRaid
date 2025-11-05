@@ -38,11 +38,11 @@ int main(int argc, char* argv[]) {
 	assert(window);
 	assert(renderer);
 	
-	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 5, 0);
+	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 540.f, 50.f);
 
 	plane.velX = 0;
-	plane.sprite->x = (WIDTH / 2) - (plane.sprite->w / 2);
-	plane.sprite->y = HEIGHT - 200;
+	plane.sprite.x = (WIDTH / 2) - (plane.sprite.w / 2);
+	plane.sprite.y = HEIGHT - 200;
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
@@ -86,16 +86,13 @@ int main(int argc, char* argv[]) {
 		while (accumulator >= targetFrameTime) {
 
 			// Logic
-			plane.Tick();
-			// Update bullets
-			for (size_t i = plane.Bullets.size(); i-- > 0;) { // equivalent to (i--; i > 0). Need to decrement first due to bounds
+			plane.Tick(targetFrameTime);
+			for (int i = (int)plane.Bullets.size() - 1; i >= 0; i--) { 
 
-				plane.Bullets[i].Tick();
+				plane.Bullets[i].Tick(targetFrameTime);
 
 				if (!plane.Bullets[i].CheckBounds()) {
-					
 					plane.Bullets.erase(plane.Bullets.begin() + i);
-			
 				}
 			}
 
