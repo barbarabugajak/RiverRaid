@@ -14,17 +14,17 @@ public:
 	
 	void MoveY(float value) {
 		// Y-Axis Input bounds
-		sprite->y += value * speedY;
+		sprite.y += value;
 	}
 
 	bool CheckBounds() {
-		return ((sprite->y - sprite->h) < HEIGHT) && (sprite->y > 0.0f - sprite->h/2);
+		return ((sprite.y - sprite.h) < HEIGHT) && (sprite.y > 0.0f - sprite.h/2);
 	}
 
 	// Happens every game loop
-	virtual void Tick() override {
+	virtual void Tick(float dt) override {
 
-		MoveY(-velY);
+		MoveY(-velY*speedY*dt);
 
 	}
 

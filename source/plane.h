@@ -16,16 +16,16 @@ class Plane : public GameObject {
 		std::vector<Bullet> Bullets;
 
 		bool isShooting;
-		int shootDelay = 0;
+		float shootDelay = 0.0f;
 
 
-	void MoveX() {
+	void MoveX(float dt) {
 		// X-Axis Input bounds
 		if (velX < 0) {
-			sprite->x = std::max(sprite->x + (velX * speedX), (WIDTH / 6.0f));
+			sprite.x = std::max(sprite.x + (velX * speedX * dt), (WIDTH / 6.0f));
 		}
 		if (velX > 0) {
-			sprite->x = std::min(sprite->x + (velX * speedX), (WIDTH - (WIDTH / 6.0f) - (sprite->w)));
+			sprite.x = std::min(sprite.x + (velX * speedX * dt), (WIDTH - (WIDTH / 6.0f) - (sprite.w)));
 		}
 
 	}
@@ -62,21 +62,22 @@ class Plane : public GameObject {
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite->x + sprite->w / 2.f, sprite->y - 50.f, 10.f, 50.f, 0.f, 5.f);
+		Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 1500.f);
+		Bullets.back().velY = 1.f;
 	}
 
 	// Happens every game loop
-	virtual void Tick() override {
+	virtual void Tick(float dt) override {
 
 		GetMovementInput();
-		MoveX();
+		MoveX(dt);
 
-		if (isShooting && shootDelay <= 0) {
+		if (isShooting && shootDelay <= 0.f) {
 			Shoot(renderer);
-			shootDelay = 10;
+			shootDelay += 10.0f * dt;
 		}
 		
-		if (shootDelay > 0) shootDelay--;
+		if (shootDelay > 0.0f) shootDelay -=dt;
 	}
 
 };
