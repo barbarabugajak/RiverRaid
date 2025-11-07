@@ -3,6 +3,10 @@
 const int WIDTH = 720;
 const int HEIGHT = 1080;
 
+extern int worldSpeed;
+const int maxWorldSpeed = 1000;
+const int minWorldSpeed = 100;
+
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 

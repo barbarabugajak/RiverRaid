@@ -16,7 +16,7 @@ class Enemy : public GameObject {
 
 	// Happens every game loop
 	virtual void Tick(float dt) override {
-		MoveY(velY * speedY * dt);
+		MoveY(velY * worldSpeed * dt);
 	}
 
 	bool CheckBounds() {

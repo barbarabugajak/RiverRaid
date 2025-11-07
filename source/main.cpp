@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 	int frameCount = 0;
 
 	// Temporary here for tests
-	Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 300, 100, 75, 0, 300);
+	Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 0, 100, 75, 0, 300);
 	enemy.velY = 1.0f;
 
 	// Game loop

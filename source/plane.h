@@ -51,6 +51,14 @@ class Plane : public GameObject {
 			velX = 0;
 		}
 
+		if (key_states[SDL_SCANCODE_W]) {
+			worldSpeed = std::min(maxWorldSpeed, worldSpeed + (int)speedY);
+		}
+
+		if (key_states[SDL_SCANCODE_S]) {
+			worldSpeed = std::max(minWorldSpeed, worldSpeed - (int)speedY);
+		}
+
 		if (key_states[SDL_SCANCODE_SPACE]) {
 			isShooting = true;
 		}
@@ -62,7 +70,7 @@ class Plane : public GameObject {
 	void Shoot(SDL_Renderer* renderer) {
 
 		// Add a bullet to bullet array
-		Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 1500.f);
+		Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 2000.f);
 		Bullets.back().velY = 1.f;
 	}
 
