@@ -15,12 +15,8 @@ class Enemy : public GameObject {
 	using GameObject::GameObject;
 
 	// Happens every game loop
-	virtual void Tick(float dt) override {
-		MoveY(velY * worldSpeed * dt);
-	}
+	virtual void Tick(float dt) override;
 
-	bool CheckBounds() {
-		return (sprite.y < HEIGHT);
-	}
+	bool CheckBounds();
 
 };

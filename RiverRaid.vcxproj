@@ -19,9 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\bullet.cpp" />
+    <ClCompile Include="source\enemy.cpp" />
     <ClCompile Include="source\enviro.cpp" />
+    <ClCompile Include="source\gameObject.cpp" />
     <ClCompile Include="source\globals.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\plane.cpp" />
     <ClCompile Include="source\textures.cpp" />
   </ItemGroup>
   <ItemGroup>

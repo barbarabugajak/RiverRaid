@@ -22,44 +22,17 @@ public:
 		const char* objectName,
 		const char* path_to_texture,
 		SDL_Renderer* renderer,
-		float x, float y, float w, float h, float speedValX, float speedValY) : 
+		float x, float y, float w, float h, float speedValX, float speedValY
+	);
 
-		texture(CreateTextureFromPNG(path_to_texture, renderer), [](SDL_Texture* t) { if (t) SDL_DestroyTexture(t); })
 
-		{
+	void Render(SDL_Renderer* renderer);
 
-		name = objectName;
-
-		sprite = SDL_FRect{ x,y,w,h };
-
-		speedX = speedValX;
-		velX = speedX;
-
-		speedY = speedValY;
-		velY = speedY;
-
-	};
-
-	const void Render(SDL_Renderer* renderer) {
-
-		SDL_RenderTexture(renderer, texture.get(), NULL, &sprite);
-	}
-
-	virtual void MoveY(float value) {
-		sprite.y += value;
-	}
-
+	void MoveY(float value);
+	
 	// Happens every game loop
 	virtual void Tick(float dt) {
 
-	}
+	};
 
 };
-
-
-
-std::ostream& operator<<(std::ostream& os, const GameObject& gO)
-{
-	os << gO.name << " at : (" << gO.sprite.x << "; " << gO.sprite.y << ") " << gO.sprite.h << " x " << gO.sprite.w << "\n";
-	return os;
-}
