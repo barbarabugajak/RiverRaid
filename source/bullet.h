@@ -12,10 +12,6 @@ public:
 
 	using GameObject::GameObject;
 	
-	void MoveY(float value) {
-		// Y-Axis Input bounds
-		sprite.y += value;
-	}
 
 	bool CheckBounds() {
 		return ((sprite.y - sprite.h) < HEIGHT) && (sprite.y > 0.0f - sprite.h/2);

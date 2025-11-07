@@ -45,6 +45,10 @@ public:
 		SDL_RenderTexture(renderer, texture.get(), NULL, &sprite);
 	}
 
+	virtual void MoveY(float value) {
+		sprite.y += value;
+	}
+
 	// Happens every game loop
 	virtual void Tick(float dt) {
 

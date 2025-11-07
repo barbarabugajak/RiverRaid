@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	assert(window);
 	assert(renderer);
 	
-	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 300, 0);
+	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 300, 10);
 
 	plane.velX = 0;
 	plane.sprite.x = (WIDTH / 2) - (plane.sprite.w / 2);
@@ -58,6 +58,10 @@ int main(int argc, char* argv[]) {
 	// FPS counters
 	Uint64 startTime = SDL_GetTicks();
 	int frameCount = 0;
+
+	// Temporary here for tests
+	Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 300, 100, 75, 0, 300);
+	enemy.velY = 1.0f;
 
 	// Game loop
 	while (!close) {
@@ -79,14 +83,13 @@ int main(int argc, char* argv[]) {
 		float diff = (float)(now - last) / SDL_GetPerformanceFrequency();
 		last = now;
 		accumulator += diff;
-
-		// Temporary here for tests
-		// Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 300, 100, 75, 30, 0);
 		
 		while (accumulator >= targetFrameTime) {
 
 			// Logic
 			plane.Tick(targetFrameTime);
+			enemy.Tick(targetFrameTime);
+
 			// Update bullets
 			for (int i = (int)plane.Bullets.size() -1; i >= 0; i--) { 
 
@@ -111,7 +114,7 @@ int main(int argc, char* argv[]) {
 			plane.Render(renderer);
 
 			// Render enemies
-			// enemy.Render(renderer);
+			enemy.Render(renderer);
 
 			// Render bullets
 			for (int i = 0; i < plane.Bullets.size(); i++) {
