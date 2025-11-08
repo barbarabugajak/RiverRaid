@@ -13,7 +13,7 @@
 #include "../source/bullet.h"
 #include "../source/plane.h"
 #include "../source/enemy.h"
-#include "../source/gameState.h"
+#include "../source/gameplayManager.h"
 
 // Generic
 #include <iostream>
@@ -59,9 +59,14 @@ int main(int argc, char* argv[]) {
 	Uint64 startTime = SDL_GetTicks();
 	int frameCount = 0;
 
+	// GameplayManager
+	GameplayManager gameplayManager;
+
 	// Temporary here for tests
-	Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 0, 100, 75, 0, 300);
-	enemy.velY = 1.0f;
+	// Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 0, 100, 75, 0, 300);
+	// enemy.velY = 1.0f;
+
+	gameplayManager.AddEnemies();
 
 	// Game loop
 	while (!close) {
@@ -88,7 +93,8 @@ int main(int argc, char* argv[]) {
 
 			// Logic
 			plane.Tick(targetFrameTime);
-			enemy.Tick(targetFrameTime);
+			gameplayManager.Tick(targetFrameTime);
+			//enemy.Tick(targetFrameTime);
 
 			// Update bullets
 			for (int i = (int)plane.Bullets.size() -1; i >= 0; i--) { 
@@ -102,6 +108,17 @@ int main(int argc, char* argv[]) {
 				}
 			}
 
+			// Update enemies
+			for (int i = (int)gameplayManager.Enemies.size() - 1; i >= 0; i--) {
+
+				gameplayManager.Enemies[i].Tick(targetFrameTime);
+
+				if (!gameplayManager.Enemies[i].CheckBounds()) {
+
+					gameplayManager.Enemies.erase(gameplayManager.Enemies.begin() + i);
+
+				}
+			}
 			// Rendering
 
 			// Set backround color
@@ -114,11 +131,16 @@ int main(int argc, char* argv[]) {
 			plane.Render(renderer);
 
 			// Render enemies
-			enemy.Render(renderer);
+			// enemy.Render(renderer);
 
 			// Render bullets
 			for (int i = 0; i < plane.Bullets.size(); i++) {
 				plane.Bullets[i].Render(renderer);
+			}
+
+			// Render enemies
+			for (int i = 0; i < gameplayManager.Enemies.size(); i++) {
+				gameplayManager.Enemies[i].Render(renderer);
 			}
 
 			// Enviro

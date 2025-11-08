@@ -39,6 +39,9 @@
     <ClCompile Include="source\bullet.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="source\gameplayManager.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\textures.h">
@@ -59,10 +62,10 @@
     <ClInclude Include="source\enemy.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="source\gameState.h">
+    <ClInclude Include="source\gameObject.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="source\gameObject.h">
+    <ClInclude Include="source\gameplayManager.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
