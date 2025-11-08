@@ -51,6 +51,10 @@ void Plane::GetMovementInput() {
 			worldSpeed = std::max(minWorldSpeed, worldSpeed - (int)speedY);
 		}
 
+		if ((!key_states[SDL_SCANCODE_A] && !key_states[SDL_SCANCODE_D])) {
+			worldSpeed = std::max(minWorldSpeed, (int)(worldSpeed - speedY*(0.5f)));
+		}
+
 		if (key_states[SDL_SCANCODE_SPACE]) {
 			isShooting = true;
 		}
