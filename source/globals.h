@@ -7,6 +7,7 @@ extern int worldSpeed;
 constexpr int maxWorldSpeed = 500;
 constexpr int minWorldSpeed = 200;
 constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
+extern bool bShouldQuit;
 
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;

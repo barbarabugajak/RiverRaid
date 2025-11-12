@@ -8,6 +8,7 @@
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 extern int worldSpeed = 100;
+bool bShouldQuit = false;
 
 void SetupWindowAndRenderer() {
 

@@ -79,7 +79,7 @@ void Plane::Tick(float dt) {
 		MoveX(dt);
 
 		if (isShooting && shootDelay <= 0.f) {
-			Shoot(renderer);
+			Shoot();
 			shootDelay += 10.0f * dt;
 		}
 		

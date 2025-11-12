@@ -38,7 +38,6 @@ int main(int argc, char* argv[]) {
 	assert(window);
 	assert(renderer);
 
-	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
 
 	// Initialize enviro
@@ -58,7 +57,7 @@ int main(int argc, char* argv[]) {
 	gameplayHandler.AddEnemies();
 
 	// Game loop
-	while (!close) {
+	while (!bShouldQuit) {
 
 		SDL_Event event;
 
@@ -67,7 +66,7 @@ int main(int argc, char* argv[]) {
 
 			// Quit event handler
 			if (event.type == SDL_EVENT_QUIT) {
-				close = true;
+				bShouldQuit = true;
 				break;
 			}
 		}		

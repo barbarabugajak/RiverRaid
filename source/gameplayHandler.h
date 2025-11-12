@@ -32,4 +32,8 @@ public:
     void UpdateBullets(float dt);
     void UpdateEnemies(float dt);
     void Render();
+    void CheckCollisions();
+
+    bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
+
 };
