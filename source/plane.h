@@ -7,6 +7,7 @@
 #include "../source/bullet.h"
 #include <vector>
 
+class GameplayHandler;
 
 class Plane : public GameObject
 
@@ -15,18 +16,18 @@ class Plane : public GameObject
 public:
 
 	using GameObject::GameObject;
-	std::vector<Bullet> Bullets;
+
+	GameplayHandler* gameplayHandler;
 
 	bool isShooting;
 	float shootDelay = 0.0f;
 	static constexpr int MAX_BULLET_AMOUNT = 6;
 
-
 	void MoveX(float dt);
 
 	void GetMovementInput();
 
-	void Shoot(SDL_Renderer* renderer);
+	void Shoot();
 
 	virtual void Tick(float dt) override;
 

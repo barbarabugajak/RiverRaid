@@ -6,10 +6,8 @@
 #include "../source/globals.h"
 #include "../source/bullet.h"
 #include "../source/plane.h"
+#include "../source/gameplayHandler.h"
 #include <vector>
-
-
-
 
 void Plane::MoveX(float dt) {
 		// X-Axis Input bounds
@@ -63,15 +61,15 @@ void Plane::GetMovementInput() {
 		}
 	}
 
-void Plane::Shoot(SDL_Renderer* renderer) {
+void Plane::Shoot() {
 
-		if (Bullets.capacity() < MAX_BULLET_AMOUNT) {
-			Bullets.reserve(MAX_BULLET_AMOUNT);
+		if (gameplayHandler->Bullets.capacity() < MAX_BULLET_AMOUNT) {
+			gameplayHandler->Bullets.reserve(MAX_BULLET_AMOUNT);
 		}
 
 		// Add a bullet to bullet array
-       	Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 2000.f);
-		Bullets.back().velY = 1.f;
+		gameplayHandler->Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 2000.f);
+		gameplayHandler->Bullets.back().velY = 1.f;
 	}
 
 // Happens every game loop

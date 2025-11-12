@@ -39,7 +39,7 @@
     <ClCompile Include="source\bullet.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="source\gameplayManager.cpp">
+    <ClCompile Include="source\gameplayHandler.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClInclude Include="source\gameObject.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="source\gameplayManager.h">
+    <ClInclude Include="source\gameplayHandler.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

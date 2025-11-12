@@ -13,7 +13,7 @@
 #include "../source/bullet.h"
 #include "../source/plane.h"
 #include "../source/enemy.h"
-#include "../source/gameplayManager.h"
+#include "../source/gameplayHandler.h"
 
 // Generic
 #include <iostream>
@@ -37,12 +37,6 @@ int main(int argc, char* argv[]) {
 	// Declare variables for window and renderer
 	assert(window);
 	assert(renderer);
-	
-	Plane plane("plane", "source/assets/plane.png", renderer, 0, 0, 100, 100, 300, 10);
-
-	plane.velX = 0;
-	plane.sprite.x = (WIDTH / 2) - (plane.sprite.w / 2);
-	plane.sprite.y = HEIGHT - 200;
 
 	bool close = false;
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
@@ -52,7 +46,6 @@ int main(int argc, char* argv[]) {
 
 	// Tick handlers
 	Uint64 last = SDL_GetPerformanceCounter();
-	const float targetFrameTime = 1.0f / 60.0f;
 	float accumulator = 0;
 
 	// FPS counters
@@ -60,13 +53,9 @@ int main(int argc, char* argv[]) {
 	int frameCount = 0;
 
 	// GameplayManager
-	GameplayManager gameplayManager;
+	GameplayHandler gameplayHandler;
 
-	// Temporary here for tests
-	// Enemy enemy("enemy", "source/assets/helicopter.png", renderer, 200, 0, 100, 75, 0, 300);
-	// enemy.velY = 1.0f;
-
-	gameplayManager.AddEnemies();
+	gameplayHandler.AddEnemies();
 
 	// Game loop
 	while (!close) {
@@ -89,67 +78,21 @@ int main(int argc, char* argv[]) {
 		last = now;
 		accumulator += diff;
 		
-		while (accumulator >= targetFrameTime) {
+		while (accumulator >= TARGET_FRAME_TIME) {
 
-			// Logic
-			plane.Tick(targetFrameTime);
-			gameplayManager.Tick(targetFrameTime);
-			//enemy.Tick(targetFrameTime);
+			// ============= Logic ==============
+			gameplayHandler.Tick(TARGET_FRAME_TIME);
 
-			// Update bullets
-			for (int i = (int)plane.Bullets.size() -1; i >= 0; i--) { 
 
-				plane.Bullets[i].Tick(targetFrameTime);
-
-				if (!plane.Bullets[i].CheckBounds()) {
-					
-					plane.Bullets.erase(plane.Bullets.begin() + i);
-			
-				}
-			}
-
-			// Update enemies
-			for (int i = (int)gameplayManager.Enemies.size() - 1; i >= 0; i--) {
-
-				gameplayManager.Enemies[i].Tick(targetFrameTime);
-
-				if (!gameplayManager.Enemies[i].CheckBounds()) {
-
-					gameplayManager.Enemies.erase(gameplayManager.Enemies.begin() + i);
-
-				}
-			}
-			// Rendering
-
-			// Set backround color
+			// ========== Rendering =============
 			SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
-
-			// Clear screen
 			SDL_RenderClear(renderer);
-
-			// Render plane
-			plane.Render(renderer);
-
-			// Render enemies
-			// enemy.Render(renderer);
-
-			// Render bullets
-			for (int i = 0; i < plane.Bullets.size(); i++) {
-				plane.Bullets[i].Render(renderer);
-			}
-
-			// Render enemies
-			for (int i = 0; i < gameplayManager.Enemies.size(); i++) {
-				gameplayManager.Enemies[i].Render(renderer);
-			}
-
-			// Enviro
-			DrawEnviro();
-
-			// Draw onscreen
+			gameplayHandler.Render();
 			SDL_RenderPresent(renderer);
 
-			accumulator -= targetFrameTime;
+
+			// ========== Frame Rate =============
+			accumulator -= TARGET_FRAME_TIME;
 
 			Uint64 currentTime = SDL_GetTicks();
 			float elapsedTime = (currentTime - startTime) / 1000.0f;
@@ -163,9 +106,7 @@ int main(int argc, char* argv[]) {
 				startTime = currentTime;
 			}
 		}
-
-		
-		
+	
 	}
 
 	// Shutdown

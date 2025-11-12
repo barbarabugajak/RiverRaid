@@ -1,11 +1,12 @@
 #pragma once
 
-const int WIDTH = 720;
-const int HEIGHT = 1080;
+constexpr int WIDTH = 720;
+constexpr int HEIGHT = 1080;
 
 extern int worldSpeed;
-const int maxWorldSpeed = 500;
-const int minWorldSpeed = 200;
+constexpr int maxWorldSpeed = 500;
+constexpr int minWorldSpeed = 200;
+constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
 
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
