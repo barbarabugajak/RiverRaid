@@ -5,6 +5,8 @@
 #include <SDL3/SDL_render.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3/SDL_keycode.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_ttf/SDL_textengine.h>
 // Project headers
 #include "../source/textures.h"
 #include "../source/gameObject.h"
@@ -24,6 +26,16 @@ int main(int argc, char* argv[]) {
 	// Initalize video subsystem
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		std::cout << "Video did not initialize properly" << "\n";
+		std::cout << SDL_GetError() << "\n";
+		return SDL_APP_FAILURE;
+	}
+	else {
+		std::cout << "Video initialized" << "\n";
+	};
+	
+	// Initialize SDL text library
+	if (!TTF_Init()) {
+		std::cout << "Text did not initialize properly" << "\n";
 		std::cout << SDL_GetError() << "\n";
 		return SDL_APP_FAILURE;
 	}
@@ -53,8 +65,10 @@ int main(int argc, char* argv[]) {
 
 	// GameplayManager
 	GameplayHandler gameplayHandler;
+	
+	gameplayHandler.Init();;
 
-	gameplayHandler.AddEnemies();
+
 
 	// Game loop
 	while (!bShouldQuit) {
@@ -88,6 +102,7 @@ int main(int argc, char* argv[]) {
 			SDL_RenderClear(renderer);
 			gameplayHandler.Render();
 			SDL_RenderPresent(renderer);
+
 
 
 			// ========== Frame Rate =============

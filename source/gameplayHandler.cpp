@@ -6,6 +6,8 @@
 #include "../source/gameObject.h"
 #include "../source/GameplayHandler.h"
 #include "../source/enviro.h"
+#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_ttf/SDL_textengine.h>
 
 
 void GameplayHandler::AddEnemies() {
@@ -71,6 +73,29 @@ bool GameplayHandler::CheckIfObjectsIntersect(GameObject& o1, GameObject& o2) {
 		);
 }
 
+void GameplayHandler::Init() {
+	// First initial wave
+	AddEnemies();
+}
+
+void GameplayHandler::UpdateText() {
+
+	char scoreBuffer[20];
+	sprintf_s(scoreBuffer, "Score: %d", score);
+	size_t scoreBufferSize = strlen(scoreBuffer);
+	SDL_Color White = { 255, 255, 255 };
+	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, scoreBuffer, scoreBufferSize, White);
+	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+	SDL_DestroySurface(surfaceMessage);
+	SDL_FRect Score_Rect;
+	Score_Rect.w = 200;
+	Score_Rect.h = 50;
+	Score_Rect.y = HEIGHT - 75;
+	Score_Rect.x = WIDTH / 2 - Score_Rect.w;
+	SDL_RenderTexture(renderer, Message, NULL, &Score_Rect);
+	SDL_DestroyTexture(Message);
+
+}
 
 void GameplayHandler::CheckCollisions() {
 
@@ -87,6 +112,7 @@ void GameplayHandler::CheckCollisions() {
 				std::cout << "Enemy destroyed " << Enemies[i].name << std::endl;
 				Bullets.erase(Bullets.begin() + j);
 				Enemies.erase(Enemies.begin() + i);
+				score += 10;
 				break;
 			}
 
@@ -119,10 +145,8 @@ void GameplayHandler::Tick(float dt) {
 	UpdateEnemies(dt);
 	UpdateBullets(dt);
 	CheckCollisions();
-
 	
 	
-
 }
 
 
@@ -146,4 +170,5 @@ void GameplayHandler::Render() {
 	player.Render(renderer);
 
 	DrawEnviro();
+	UpdateText();
 }

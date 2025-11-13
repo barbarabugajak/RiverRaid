@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_ttf/SDL_textengine.h>
 #include "../source/textures.h"
 #include "../source/globals.h"
 #include "../source/gameObject.h"
@@ -17,6 +19,8 @@ public:
 
     const int enemySpawnDelayAmount = 250;
     int enemySpawnDelay = enemySpawnDelayAmount;
+    int score = 1;
+    TTF_Font* font;
 
     GameplayHandler()
         : player("plane", "source/assets/plane.png", renderer,
@@ -26,8 +30,14 @@ public:
         player.sprite.x = (WIDTH / 2) - (player.sprite.w / 2);
         player.sprite.y = HEIGHT - 200;
         player.gameplayHandler = this;
+
+        font = TTF_OpenFont("source/assets/arial.ttf", 24);
+        if (!font) {
+            SDL_Log("Couldn't open font: %s\n", SDL_GetError());
+        }
     }
 
+    void Init();
     void AddEnemies();
     void Tick(float dt);
     void UpdateBullets(float dt);
@@ -35,6 +45,7 @@ public:
     void Render();
     void CheckCollisions();
     void SpawnExplosionSpecialEffect(int posX, int posY);
+    void UpdateText();
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
 
