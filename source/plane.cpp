@@ -42,15 +42,15 @@ void Plane::GetMovementInput() {
 		}
 
 		if (key_states[SDL_SCANCODE_W]) {
-			worldSpeed = std::min(maxWorldSpeed, worldSpeed + (int)speedY);
+			worldSpeed = std::min((float)maxWorldSpeed, worldSpeed + speedY);
 		}
 
 		if (key_states[SDL_SCANCODE_S]) {
-			worldSpeed = std::max(minWorldSpeed, worldSpeed - (int)speedY);
+			worldSpeed = std::max((float)minWorldSpeed, worldSpeed - speedY);
 		}
 
-		if ((!key_states[SDL_SCANCODE_A] && !key_states[SDL_SCANCODE_D])) {
-			worldSpeed = std::max(minWorldSpeed, (int)(worldSpeed - speedY*(0.5f)));
+		if (!key_states[SDL_SCANCODE_W] && !key_states[SDL_SCANCODE_S]) {
+			worldSpeed = std::max((float)minWorldSpeed, worldSpeed - speedY * 0.5f);
 		}
 
 		if (key_states[SDL_SCANCODE_SPACE]) {
@@ -80,7 +80,7 @@ void Plane::Tick(float dt) {
 
 		if (isShooting && shootDelay <= 0.f) {
 			Shoot();
-			shootDelay += 10.0f * dt;
+			shootDelay += 15.0f * dt;
 		}
 		
 		if (shootDelay > 0.0f) shootDelay -=dt;

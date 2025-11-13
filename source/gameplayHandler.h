@@ -13,13 +13,14 @@ public:
     Plane player;
     std::vector<Bullet> Bullets;
     std::vector<Enemy> Enemies;
+    std::vector<GameObject> OtherObjects;
 
-    const int enemySpawnDelayAmount = 500;
+    const int enemySpawnDelayAmount = 250;
     int enemySpawnDelay = enemySpawnDelayAmount;
 
     GameplayHandler()
         : player("plane", "source/assets/plane.png", renderer,
-            0, 0, 100, 100, 300, 10) {
+            0, 0, 100, 100, 150, 10) {
 
         player.velX = 0;
         player.sprite.x = (WIDTH / 2) - (player.sprite.w / 2);
@@ -33,6 +34,7 @@ public:
     void UpdateEnemies(float dt);
     void Render();
     void CheckCollisions();
+    void SpawnExplosionSpecialEffect(int posX, int posY);
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
 

@@ -27,6 +27,7 @@ void GameplayHandler::UpdateBullets(float dt) {
 
 			Bullets.erase(Bullets.begin() + i);
 
+
 		}
 	}
 }
@@ -84,6 +85,7 @@ void GameplayHandler::CheckCollisions() {
 
 			if (CheckIfObjectsIntersect(Bullets[j], Enemies[i])) {
 				std::cout << "Enemy destroyed " << Enemies[i].name << std::endl;
+				Bullets.erase(Bullets.begin() + j);
 				Enemies.erase(Enemies.begin() + i);
 				break;
 			}
@@ -93,8 +95,20 @@ void GameplayHandler::CheckCollisions() {
 
 }
 
-void GameplayHandler::Tick(float dt) {
+void GameplayHandler::SpawnExplosionSpecialEffect(int posX, int posY) {
 
+	OtherObjects.emplace_back(GameObject(
+		"explosion",
+		"source/assets/explosion.png",
+		renderer,
+		posX, posY, 100, 50, 0, 0));
+
+	std::cout << "Boom" << std::endl;
+
+}
+
+void GameplayHandler::Tick(float dt) {
+	
 	enemySpawnDelay -= dt * worldSpeed;
 	if (enemySpawnDelay <= 0.f) {
 		enemySpawnDelay = enemySpawnDelayAmount;
@@ -105,6 +119,9 @@ void GameplayHandler::Tick(float dt) {
 	UpdateEnemies(dt);
 	UpdateBullets(dt);
 	CheckCollisions();
+
+	
+	
 
 }
 
@@ -120,6 +137,10 @@ void GameplayHandler::Render() {
 	// Render enemies
 	for (int i = 0; i < Enemies.size(); i++) {
 		Enemies[i].Render(renderer);
+	}
+
+	for (int i = 0; i < OtherObjects.size(); i++) {
+		OtherObjects[i].Render(renderer);
 	}
 
 	player.Render(renderer);

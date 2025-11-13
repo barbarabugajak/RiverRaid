@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\animatedObject.cpp" />
     <ClCompile Include="source\bullet.cpp" />
     <ClCompile Include="source\enemy.cpp" />
     <ClCompile Include="source\enviro.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="source\textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\animatedObject.h" />
     <ClInclude Include="source\bullet.h" />
     <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\enviro.h" />

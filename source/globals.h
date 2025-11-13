@@ -3,9 +3,9 @@
 constexpr int WIDTH = 720;
 constexpr int HEIGHT = 1080;
 
-extern int worldSpeed;
-constexpr int maxWorldSpeed = 500;
-constexpr int minWorldSpeed = 200;
+extern float worldSpeed;
+constexpr float maxWorldSpeed = 600;
+constexpr float minWorldSpeed = 250;
 constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
 extern bool bShouldQuit;
 
