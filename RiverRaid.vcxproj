@@ -33,12 +33,14 @@
   <ItemGroup>
     <ClInclude Include="source\animatedObject.h" />
     <ClInclude Include="source\bullet.h" />
+    <ClInclude Include="source\button.h" />
     <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\enviro.h" />
     <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\gameplayHandler.h" />
     <ClInclude Include="source\globals.h" />
     <ClInclude Include="source\plane.h" />
+    <ClInclude Include="source\textObject.h" />
     <ClInclude Include="source\textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

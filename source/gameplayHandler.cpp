@@ -78,25 +78,6 @@ void GameplayHandler::Init() {
 	AddEnemy();
 }
 
-void GameplayHandler::UpdateText() {
-
-	char scoreBuffer[20];
-	sprintf_s(scoreBuffer, "Score: %d", score);
-	size_t scoreBufferSize = strlen(scoreBuffer);
-	SDL_Color White = { 255, 255, 255 };
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, scoreBuffer, scoreBufferSize, White);
-	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-	SDL_DestroySurface(surfaceMessage);
-	SDL_FRect Score_Rect;
-	Score_Rect.w = 200;
-	Score_Rect.h = 50;
-	Score_Rect.y = HEIGHT - 75;
-	Score_Rect.x = WIDTH / 2 - Score_Rect.w;
-	SDL_RenderTexture(renderer, Message, NULL, &Score_Rect);
-	SDL_DestroyTexture(Message);
-
-}
-
 void GameplayHandler::CheckCollisions() {
 
 	for (int i = (int)Enemies.size() - 1; i >= 0; i--) {
@@ -171,5 +152,5 @@ void GameplayHandler::Render() {
 
 	player.Render(renderer);
 
-	UpdateText();
+	// UpdateText();
 }

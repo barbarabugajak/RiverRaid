@@ -7,8 +7,7 @@
 #include <iostream>
 #include <cassert>
 
-
-	class AnimatedObject : public GameObject {
+class AnimatedObject : public GameObject {
 
 	public:
 		const char* name = nullptr;
@@ -28,4 +27,4 @@
 
 		};
 
-	};
+};

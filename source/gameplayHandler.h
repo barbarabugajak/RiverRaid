@@ -8,7 +8,7 @@
 #include "../source/gameObject.h"
 #include "../source/Enemy.h"
 #include "../source/plane.h"
-
+#include "../source/textObject.h"
 
 class GameplayHandler {
 public:
@@ -45,7 +45,6 @@ public:
     void Render();
     void CheckCollisions();
     void SpawnExplosionSpecialEffect(int posX, int posY);
-    void UpdateText();
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
 

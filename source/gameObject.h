@@ -7,7 +7,7 @@
 	#include <cassert>
 
 
-	class GameObject {
+class GameObject {
 
 	public:
 		const char* name = nullptr;
