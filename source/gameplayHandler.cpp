@@ -10,7 +10,7 @@
 #include <SDL3_ttf/SDL_textengine.h>
 
 
-void GameplayHandler::AddEnemies() {
+void GameplayHandler::AddEnemy() {
 	
 	float enemyX = WIDTH / 6;
 	enemyX += SDL_rand(WIDTH * (4.0f / 6.0f) - 110);
@@ -75,7 +75,7 @@ bool GameplayHandler::CheckIfObjectsIntersect(GameObject& o1, GameObject& o2) {
 
 void GameplayHandler::Init() {
 	// First initial wave
-	AddEnemies();
+	AddEnemy();
 }
 
 void GameplayHandler::UpdateText() {
@@ -138,7 +138,7 @@ void GameplayHandler::Tick(float dt) {
 	enemySpawnDelay -= dt * worldSpeed;
 	if (enemySpawnDelay <= 0.f) {
 		enemySpawnDelay = enemySpawnDelayAmount;
-		AddEnemies();
+		AddEnemy();
 	};
 	player.Tick(dt);
 
@@ -152,6 +152,8 @@ void GameplayHandler::Tick(float dt) {
 
 
 void GameplayHandler::Render() {
+
+	DrawEnviro();
 
 	// Render bullets
 	for (int i = 0; i < Bullets.size(); i++) {
@@ -169,6 +171,5 @@ void GameplayHandler::Render() {
 
 	player.Render(renderer);
 
-	DrawEnviro();
 	UpdateText();
 }

@@ -38,7 +38,7 @@ public:
     }
 
     void Init();
-    void AddEnemies();
+    void AddEnemy();
     void Tick(float dt);
     void UpdateBullets(float dt);
     void UpdateEnemies(float dt);

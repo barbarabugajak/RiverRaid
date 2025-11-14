@@ -16,7 +16,6 @@
 #include "../source/plane.h"
 #include "../source/enemy.h"
 #include "../source/gameplayHandler.h"
-
 // Generic
 #include <iostream>
 #include <vector>
@@ -45,29 +44,19 @@ int main(int argc, char* argv[]) {
 
 	SetupWindowAndRenderer();
 
-
-	// Declare variables for window and renderer
 	assert(window);
 	assert(renderer);
 
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
-
-	// Initialize enviro
 	PrepareEnviro();
 
-	// Tick handlers
-	Uint64 last = SDL_GetPerformanceCounter();
-	float accumulator = 0;
-
-	// FPS counters
-	Uint64 startTime = SDL_GetTicks();
-	int frameCount = 0;
-
-	// GameplayManager
 	GameplayHandler gameplayHandler;
-	
 	gameplayHandler.Init();;
 
+	Uint64 last = SDL_GetPerformanceCounter();
+	float accumulator = 0;
+	Uint64 startTime = SDL_GetTicks();
+	int frameCount = 0;
 
 
 	// Game loop
@@ -78,14 +67,12 @@ int main(int argc, char* argv[]) {
 		// Event pump
 		while (SDL_PollEvent(&event)) {
 
-			// Quit event handler
 			if (event.type == SDL_EVENT_QUIT) {
 				bShouldQuit = true;
 				break;
 			}
 		}		
 
-		// Frame-rate controllers
 		Uint64 now = SDL_GetPerformanceCounter();
 		float diff = (float)(now - last) / SDL_GetPerformanceFrequency();
 		last = now;
@@ -107,7 +94,6 @@ int main(int argc, char* argv[]) {
 
 			// ========== Frame Rate =============
 			accumulator -= TARGET_FRAME_TIME;
-
 			Uint64 currentTime = SDL_GetTicks();
 			float elapsedTime = (currentTime - startTime) / 1000.0f;
 			frameCount++;
