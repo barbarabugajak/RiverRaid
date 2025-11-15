@@ -52,12 +52,6 @@ public:
 		SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, textBuffer, bufferSize, color);
 		SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 		SDL_DestroySurface(surfaceMessage);
-		// SDL_FRect Score_Rect;
-	/*	Score_Rect.w = 200;
-		Score_Rect.h = 50;
-		Score_Rect.y = HEIGHT - 75;
-		Score_Rect.x = (WIDTH - Score_Rect.w) / 2;*/
-			
 		SDL_RenderTexture(renderer, Message, NULL, &sprite);
 
 		SDL_DestroyTexture(Message);

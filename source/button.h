@@ -13,41 +13,19 @@ public:
     float r, g, b = 0.f;
     float opacity = SDL_ALPHA_OPAQUE_FLOAT;
     void (*OnClick)();
+    
     const char* emptyString = "";
 
+    TextObject<const char*> msg {
+        "Message: %s", 0.f, 0.f,
+        0.f, 0.f, 255, 255, 255, emptyString
+    };
+
+
     Button(float x, float y, float w, float h,
-        void (*OnClickFunction)(), 
-        float rVal, float gVal, float bVal) {
-        sprite = SDL_FRect{ x,y,w,h };
-        OnClick = OnClickFunction;
-        r = rVal;
-        g = gVal;
-        b = bVal;
-    }
+        void (*OnClickFunction)(),
+        float rVal, float gVal, float bVal, const char* text);
 
-    void CheckHover() {
-        SDL_PumpEvents();
-
-        float mouseY;
-        float mouseX;
-       
-
-        SDL_MouseButtonFlags MouseState = SDL_GetMouseState(&mouseX, &mouseY);
-
-        if (mouseX >= sprite.x && mouseX <= sprite.x + sprite.w &&
-            mouseY >= sprite.y && mouseY <= sprite.y + sprite.h)
-        {
-            OnClick();
-            opacity = 0.f;
-            SDL_HideCursor();;
-        }
-
-    };
-    void Render() {
-
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColorFloat(renderer, r, g, b, opacity);
-        SDL_RenderFillRect(renderer, &sprite);
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-    };
+    bool CheckHover();
+    void Render();
 };

@@ -6,9 +6,18 @@
 #include "../source/gameObject.h"
 #include "../source/GameplayHandler.h"
 #include "../source/enviro.h"
+#include "../source/button.h"
+#include "../source/textObject.h"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_ttf/SDL_textengine.h>
 
+void GameplayHandler::TogglePause() {
+	bIsPaused = !bIsPaused;
+}
+
+void GameplayHandler::Quit() {
+	bShouldQuit = true;
+}
 
 void GameplayHandler::AddEnemy() {
 	
@@ -76,6 +85,26 @@ bool GameplayHandler::CheckIfObjectsIntersect(GameObject& o1, GameObject& o2) {
 void GameplayHandler::Init() {
 	// First initial wave
 	AddEnemy();
+
+	// For memory efficiency
+	Bullets.reserve(MAX_BULLET_AMOUNT);
+	Buttons.reserve(2);
+	Enemies.reserve(10);
+
+	// Create and show UI
+	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f + HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::TogglePause, 0.f, 0.7f, 0.f, "Play!");
+
+	Buttons.emplace_back(Button((WIDTH - 200.0f) / 2, HEIGHT / 2.f - HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!"));
+
+
+}
+
+void GameplayHandler::CheckIfAnyButtonWasClicked() {
+	for (int i = 0; i < Buttons.size(); i++) {
+		if (Buttons[i].CheckHover()) {
+			bShowUI = false;
+		}
+	}
 }
 
 void GameplayHandler::CheckCollisions() {
@@ -152,5 +181,13 @@ void GameplayHandler::Render() {
 
 	player.Render(renderer);
 
-	// UpdateText();
+	scoreText.Render();
+
+	if (bShowUI) {
+		for (int i = 0; i < Buttons.size(); i++) {
+			Buttons[i].Render();
+		}
+	}
+
 }
+

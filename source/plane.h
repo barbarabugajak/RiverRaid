@@ -21,7 +21,6 @@ public:
 
 	bool isShooting;
 	float shootDelay = 0.0f;
-	static constexpr int MAX_BULLET_AMOUNT = 6;
 
 	void MoveX(float dt);
 

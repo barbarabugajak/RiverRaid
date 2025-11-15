@@ -22,11 +22,6 @@
 #include <iostream>
 #include <vector>
 
-void unPause() {
-	std::cout << "OnClick fired";
-	bIsPaused = false;
-}
-
 int main(int argc, char* argv[]) {
 
 	// Initalize video subsystem
@@ -67,13 +62,7 @@ int main(int argc, char* argv[]) {
 	Uint64 startTime = SDL_GetTicks();
 	int frameCount = 0;
 
-	// Temporary here for tests
-	Button startGameButton((WIDTH - 200.0f) / 2, HEIGHT / 2.f, 200.f, 60.f, unPause, 0.f, 1.f, 0.1f);
 	
-	TextObject<int> score("Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, gameplayHandler.score);
-	score.sprite.x = (WIDTH - score.sprite.w) / 2;
-	const char* emptyString = "";
-	// TextObject<const char*> msg("Message: %s", 200.f, HEIGHT / 4.f, 200.f, 50.f, 255, 0, 255, emptyString);
 	SDL_ShowCursor();
 	// Game loop
 	while (!bShouldQuit) {
@@ -89,7 +78,7 @@ int main(int argc, char* argv[]) {
 			}
 
 			if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-				startGameButton.CheckHover();
+				gameplayHandler.CheckIfAnyButtonWasClicked();
 				break;
 			}
 		}		
@@ -112,13 +101,8 @@ int main(int argc, char* argv[]) {
 			SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
 			SDL_RenderClear(renderer);
 			gameplayHandler.Render();
-			startGameButton.Render();
-			score.Render();
 			SDL_SetRenderDrawColorFloat(renderer, green, blue, blue, SDL_ALPHA_OPAQUE_FLOAT);
 			SDL_RenderPresent(renderer);
-
-			
-
 
 
 			// ========== Frame Rate =============

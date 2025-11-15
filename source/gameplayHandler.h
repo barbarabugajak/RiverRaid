@@ -8,6 +8,7 @@
 #include "../source/gameObject.h"
 #include "../source/Enemy.h"
 #include "../source/plane.h"
+#include "../source/button.h"
 #include "../source/textObject.h"
 
 class GameplayHandler {
@@ -16,6 +17,8 @@ public:
     std::vector<Bullet> Bullets;
     std::vector<Enemy> Enemies;
     std::vector<GameObject> OtherObjects;
+    std::vector<Button> Buttons;
+    TextObject<int> scoreText{ "Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
 
     const int enemySpawnDelayAmount = 250;
     int enemySpawnDelay = enemySpawnDelayAmount;
@@ -30,6 +33,7 @@ public:
         player.sprite.x = (WIDTH / 2) - (player.sprite.w / 2);
         player.sprite.y = HEIGHT - 200;
         player.gameplayHandler = this;
+        scoreText.sprite.x = (WIDTH - scoreText.sprite.w) / 2;
 
         font = TTF_OpenFont("source/assets/arial.ttf", 24);
         if (!font) {
@@ -47,5 +51,11 @@ public:
     void SpawnExplosionSpecialEffect(int posX, int posY);
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
+
+    void CheckIfAnyButtonWasClicked();
+    bool bShowUI = true;
+    static void TogglePause();
+    static void Quit();
+
 
 };

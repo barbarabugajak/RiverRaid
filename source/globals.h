@@ -8,6 +8,7 @@ extern float worldSpeed;
 constexpr float maxWorldSpeed = 600;
 constexpr float minWorldSpeed = 250;
 constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
+static constexpr size_t MAX_BULLET_AMOUNT = 6;
 extern bool bShouldQuit;
 extern bool bIsPaused;
 
