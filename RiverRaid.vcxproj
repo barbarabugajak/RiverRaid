@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\basia\Desktop\RiverRaid\SDL3_ttf-3.2.2\include;$(SolutionDir)SDL3-3.2.24\include;$(SolutionDir)SDL3_image-3.2.4\include;$(SolutionDir)source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL3_ttf-3.2.2\include;$(SolutionDir)SDL3-3.2.24\include;$(SolutionDir)SDL3_image-3.2.4\include;$(SolutionDir)source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
