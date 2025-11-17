@@ -22,7 +22,7 @@ public:
 
     const int enemySpawnDelayAmount = 250;
     int enemySpawnDelay = enemySpawnDelayAmount;
-    int score = 1;
+    int score = 0;
     TTF_Font* font;
 
     GameplayHandler()

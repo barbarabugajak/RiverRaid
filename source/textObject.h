@@ -24,24 +24,15 @@ public:
 		sprite = SDL_FRect{ x, y, w, h };
 		color = SDL_Color{ r,g,b };
 
-		if (param != NULL) {
-			sprintf_s(textBuffer, text, param);
-		}
-		else {
-			sprintf_s(textBuffer, text, "");
-		}
+		sprintf_s(textBuffer, text, param);
+		
 		bufferSize = strlen(textBuffer);
 	}
 
 	void UpdateText() {
 
-		if (param != NULL) {
-			sprintf_s(textBuffer, text, param);
+		sprintf_s(textBuffer, text, param);
 
-		}
-		else {
-			sprintf_s(textBuffer, text);
-		}
 		bufferSize = strlen(textBuffer);
 	}
 
