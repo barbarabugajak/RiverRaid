@@ -20,7 +20,7 @@ void Plane::MoveX(float dt) {
 
 	}
 
-void Plane::GetMovementInput() {
+void Plane::GetMovementInput(float dt) {
 
 		const bool* key_states = SDL_GetKeyboardState(NULL);
 
@@ -42,15 +42,15 @@ void Plane::GetMovementInput() {
 		}
 
 		if (key_states[SDL_SCANCODE_W]) {
-			worldSpeed = std::min((float)maxWorldSpeed, worldSpeed + speedY);
+			worldSpeed = std::min((float)maxWorldSpeed, (worldSpeed + speedY));
 		}
 
 		if (key_states[SDL_SCANCODE_S]) {
-			worldSpeed = std::max((float)minWorldSpeed, worldSpeed - speedY);
+			worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - speedY));
 		}
 
 		if (!key_states[SDL_SCANCODE_W] && !key_states[SDL_SCANCODE_S]) {
-			worldSpeed = std::max((float)minWorldSpeed, worldSpeed - speedY * 0.5f);
+			worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - speedY * 0.5f));
 		}
 
 		if (key_states[SDL_SCANCODE_SPACE]) {
@@ -71,7 +71,7 @@ void Plane::Shoot() {
 // Happens every game loop
 void Plane::Tick(float dt) {
 
-		GetMovementInput();
+		GetMovementInput(dt);
 		MoveX(dt);
 
 		if (isShooting && shootDelay <= 0.f) {

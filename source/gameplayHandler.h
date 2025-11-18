@@ -10,6 +10,7 @@
 #include "../source/plane.h"
 #include "../source/button.h"
 #include "../source/textObject.h"
+#include "../source/fuelBarrel.h"
 
 class GameplayHandler {
 
@@ -19,28 +20,33 @@ public:
     const char* PLANE_ASSET_SOURCE = "source/assets/plane.png";
     const char* ENEMY_HELICOPTER_ASSET_SOURCE = "source/assets/helicopter.png";
     const char* EXPLOSION_ASSETS_SOURCE = "source/assets/explosion.png";
+    const char* FUEL_BARREL_ASSET_SOURCE = "source/assets/fuel.png";
 
     // ==== MEMBERS ========
     Plane player;
     std::vector<Bullet> Bullets;
     std::vector<Enemy> Enemies;
+    std::vector<FuelBarrel> FuelBarrels;
     std::vector<GameObject> OtherObjects;
     std::vector<Button> Buttons;
     TextObject<int> scoreText{ "Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
+    TextObject<float> fuelText{"Fuel: %.2f", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, player.fuelCount };
 
-    const int enemySpawnDelayAmount = 250;
-    int enemySpawnDelay = enemySpawnDelayAmount;
+    const int spawnDelay = 200;
+    int currentSpawnDelayValue = spawnDelay;
     int score = 0;
+ 
 
     GameplayHandler()
         : player("plane", PLANE_ASSET_SOURCE, renderer,
-            0, 0, 100, 100, 150, 10) {
+            0, 0, 100, 100, 150, 5) {
 
         player.velX = 0;
         player.sprite.x = (WIDTH / 2) - (player.sprite.w / 2);
         player.sprite.y = HEIGHT - 200;
         player.gameplayHandler = this;
-        scoreText.sprite.x = (WIDTH - scoreText.sprite.w) / 2;
+        scoreText.sprite.x = ((WIDTH - scoreText.sprite.w) / 2) - WIDTH / 6.f;
+        fuelText.sprite.x = ((WIDTH - scoreText.sprite.w) / 2) + WIDTH / 6.f;
 
         if (!font) {
             SDL_Log("Couldn't open font: %s\n", SDL_GetError());
@@ -49,9 +55,12 @@ public:
 
     void Init();
     void AddEnemy();
+    void AddFuelBarrel();
     void Tick(float dt);
     void UpdateBullets(float dt);
     void UpdateEnemies(float dt);
+    void UpdateFuelBarrels(float dt);
+    void UpdateFuel(float dt);
     void Render();
     void CheckCollisions();
     void SpawnExplosionSpecialEffect(float posX, float posY);
@@ -65,8 +74,3 @@ public:
 
 
 };
-
-
-namespace LetsHaveSomeFun {
-
-}

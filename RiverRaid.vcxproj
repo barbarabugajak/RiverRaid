@@ -38,6 +38,7 @@
     <ClInclude Include="source\button.h" />
     <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\enviro.h" />
+    <ClInclude Include="source\fuelBarrel.h" />
     <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\gameplayHandler.h" />
     <ClInclude Include="source\globals.h" />

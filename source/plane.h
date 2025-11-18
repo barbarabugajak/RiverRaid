@@ -19,13 +19,14 @@ public:
 
 	GameplayHandler* gameplayHandler;
 
+	float fuelCount = 99.00f;
 	bool isShooting;
 	float shootDelay = 0.0f;
 	const char* BULLET_ASSET_SOURCE = "source/assets/bullet.png";
 
 	void MoveX(float dt);
 
-	void GetMovementInput();
+	void GetMovementInput(float dt);
 
 	void Shoot();
 

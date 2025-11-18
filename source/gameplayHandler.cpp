@@ -8,6 +8,7 @@
 #include "../source/enviro.h"
 #include "../source/button.h"
 #include "../source/textObject.h"
+#include "../source/fuelBarrel.h"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_ttf/SDL_textengine.h>
 
@@ -90,6 +91,7 @@ void GameplayHandler::Init() {
 	Bullets.reserve(MAX_BULLET_AMOUNT);
 	Buttons.reserve(2);
 	Enemies.reserve(10);
+	FuelBarrels.reserve(10);
 
 	// Create and show UI
 	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f + HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::TogglePause, 0.f, 0.7f, 0.f, "Play!");
@@ -112,24 +114,42 @@ void GameplayHandler::CheckCollisions() {
 	for (int i = (int)Enemies.size() - 1; i >= 0; i--) {
 
 		if (CheckIfObjectsIntersect(player, Enemies[i])) {
-			std::cout << "Player crashes into enemy " << Enemies[i].name << std::endl;
 			bShouldQuit = true;
 		}
 
 		for (int j = (int)Bullets.size() - 1; j >= 0; j--) {
 
 			if (CheckIfObjectsIntersect(Bullets[j], Enemies[i])) {
-				std::cout << "Enemy destroyed " << Enemies[i].name << std::endl;
 				Bullets.erase(Bullets.begin() + j);
 				Enemies.erase(Enemies.begin() + i);
-				score += 10;
+				score += SCORE_FOR_ENEMY_DESTRUCTION + SCORE_FOR_ENEMY_DESTRUCTION*((int)(worldSpeed/maxWorldSpeed));
 				break;
 			}
 
 		}
 	}
 
+	for (int i = (int)FuelBarrels.size() - 1; i >= 0; i--) {
 
+		for (int j = (int)Bullets.size() - 1; j >= 0; j--) {
+
+			if (CheckIfObjectsIntersect(Bullets[j], FuelBarrels[i])) {
+
+				Bullets.erase(Bullets.begin() + j);
+				FuelBarrels.erase(FuelBarrels.begin() + i);
+				player.fuelCount = 99.99f;
+				break;
+			}
+
+			if (CheckIfObjectsIntersect(player, FuelBarrels[i])) {
+
+				bShouldQuit = true;
+				break;
+			}
+
+		}
+	}
+	
 }
 
 void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
@@ -144,17 +164,58 @@ void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
 
 }
 
+void GameplayHandler::UpdateFuel(float dt) {
+
+	player.fuelCount -=  worldSpeed * (float)(abs(player.velY)) * dt * FUELL_LOSS_COEFFICIENT; 
+	if (player.fuelCount <= 0.f) {
+		bShouldQuit = true;
+	}
+}
+
+void GameplayHandler::UpdateFuelBarrels(float dt) {
+
+	for (int i = (int)FuelBarrels.size() - 1; i >= 0; i--) {
+
+		FuelBarrels[i].Tick(TARGET_FRAME_TIME);
+
+		if (!FuelBarrels[i].CheckBounds()) {
+
+			FuelBarrels.erase(FuelBarrels.begin() + i);
+
+		}
+	}
+
+}
+
+void GameplayHandler::AddFuelBarrel() {
+	float barrelX = WIDTH / 6;
+	barrelX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
+	FuelBarrels.emplace_back(FuelBarrel("fuelBarrel", FUEL_BARREL_ASSET_SOURCE, renderer, barrelX, -50, 75, 100, 10, 300));
+	FuelBarrels.back().velY = 1.f;
+}
+
 void GameplayHandler::Tick(float dt) {
 	
-	enemySpawnDelay -= (int)(dt * worldSpeed);
-	if (enemySpawnDelay <= 0.f) {
-		enemySpawnDelay = enemySpawnDelayAmount;
-		AddEnemy();
+	currentSpawnDelayValue -= (int)(dt * worldSpeed);
+	if (currentSpawnDelayValue <= 0.f) {
+
+		Sint32 rand = SDL_rand(100);
+
+		if (rand <= FUEL_PROBABILITY || player.fuelCount < 20.f) {
+			AddFuelBarrel();
+		}
+		else {
+			AddEnemy();
+		}
+
+		currentSpawnDelayValue = spawnDelay;
 	};
 	player.Tick(dt);
 
 	UpdateEnemies(dt);
 	UpdateBullets(dt);
+	UpdateFuel(dt);
+	UpdateFuelBarrels(dt);
 	CheckCollisions();
 	
 	
@@ -180,9 +241,14 @@ void GameplayHandler::Render() {
 		OtherObjects[i].Render(renderer);
 	}
 
+	for (int i = 0; i < FuelBarrels.size(); i++) {
+		FuelBarrels[i].Render(renderer);
+	}
+
 	player.Render(renderer);
 
 	scoreText.Render();
+	fuelText.Render();
 
 	if (bShowUI) {
 		for (int i = 0; i < Buttons.size(); i++) {
