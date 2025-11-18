@@ -22,9 +22,11 @@ void SetupWindowAndRenderer() {
 
 }
 
+const char* FONT_ASSET_SOURCE = "source/assets/arial.ttf";
+
 void LoadFont() {
 
-	font = TTF_OpenFont("source/assets/arial.ttf", 24);
+	font = TTF_OpenFont(FONT_ASSET_SOURCE, 24);
 
 	if (!font) {
 		printf("Couldn't open font: %s\n", SDL_GetError());

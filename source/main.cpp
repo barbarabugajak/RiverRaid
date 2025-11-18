@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 		return SDL_APP_FAILURE;
 	}
 	else {
-		std::cout << "Video initialized" << "\n";
+		std::cout << "Text initialized" << "\n";
 	};
 
 	SetupWindowAndRenderer();
@@ -119,7 +119,6 @@ int main(int argc, char* argv[]) {
 				startTime = currentTime;
 			}
 		}
-	
 	}
 
 	// Shutdown

@@ -64,7 +64,7 @@ void Plane::GetMovementInput() {
 void Plane::Shoot() {
 
 		// Add a bullet to bullet array
-		gameplayHandler->Bullets.emplace_back("b", "source/assets/bullet.png", renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 2000.f);
+		gameplayHandler->Bullets.emplace_back("b", BULLET_ASSET_SOURCE, renderer, sprite.x + sprite.w / 2.f, sprite.y - 50.f, 10.f, 50.f, 0.f, 2000.f);
 		gameplayHandler->Bullets.back().velY = 1.f;
 	}
 

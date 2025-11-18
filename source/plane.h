@@ -21,6 +21,7 @@ public:
 
 	bool isShooting;
 	float shootDelay = 0.0f;
+	const char* BULLET_ASSET_SOURCE = "source/assets/bullet.png";
 
 	void MoveX(float dt);
 

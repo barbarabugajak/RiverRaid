@@ -13,7 +13,7 @@ public:
     float r, g, b = 0.f;
     float opacity = SDL_ALPHA_OPAQUE_FLOAT;
     void (*OnClick)();
-    
+
     const char* emptyString = "";
 
     TextObject<const char*> msg {

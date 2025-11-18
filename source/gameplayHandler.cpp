@@ -22,8 +22,8 @@ void GameplayHandler::Quit() {
 void GameplayHandler::AddEnemy() {
 	
 	float enemyX = WIDTH / 6;
-	enemyX += SDL_rand(WIDTH * (4.0f / 6.0f) - 110);
-	Enemies.emplace_back(Enemy("enemy", "source/assets/helicopter.png", renderer, enemyX, -50, 100, 75, 0, 300));
+	enemyX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
+	Enemies.emplace_back(Enemy("enemy", ENEMY_HELICOPTER_ASSET_SOURCE, renderer, enemyX, -50, 100, 75, 0, 300));
 	Enemies.back().velY = 1.f;
 
 }
@@ -61,16 +61,16 @@ void GameplayHandler::UpdateEnemies(float dt) {
 
 bool GameplayHandler::CheckIfObjectsIntersect(GameObject& o1, GameObject& o2) {
 
-	float x_min_o1 = o1.sprite.x;
-	float x_max_o1 = o1.sprite.x + o1.sprite.w;
-	float y_min_o1 = o1.sprite.y;
-	float y_max_o1 = o1.sprite.y + o1.sprite.h;
+	const float x_min_o1 = o1.sprite.x;
+	const float x_max_o1 = o1.sprite.x + o1.sprite.w;
+	const float y_min_o1 = o1.sprite.y;
+	const float y_max_o1 = o1.sprite.y + o1.sprite.h;
 
 
-	float x_min_o2 = o2.sprite.x;
-	float x_max_o2 = o2.sprite.x + o2.sprite.w;
-	float y_min_o2 = o2.sprite.y;
-	float y_max_o2 = o2.sprite.y + o2.sprite.h;
+	const float x_min_o2 = o2.sprite.x;
+	const float x_max_o2 = o2.sprite.x + o2.sprite.w;
+	const float y_min_o2 = o2.sprite.y;
+	const float y_max_o2 = o2.sprite.y + o2.sprite.h;
 
 
 	return (
@@ -129,13 +129,14 @@ void GameplayHandler::CheckCollisions() {
 		}
 	}
 
+
 }
 
-void GameplayHandler::SpawnExplosionSpecialEffect(int posX, int posY) {
+void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
 
 	OtherObjects.emplace_back(GameObject(
 		"explosion",
-		"source/assets/explosion.png",
+		EXPLOSION_ASSETS_SOURCE,
 		renderer,
 		posX, posY, 100, 50, 0, 0));
 
@@ -145,7 +146,7 @@ void GameplayHandler::SpawnExplosionSpecialEffect(int posX, int posY) {
 
 void GameplayHandler::Tick(float dt) {
 	
-	enemySpawnDelay -= dt * worldSpeed;
+	enemySpawnDelay -= (int)(dt * worldSpeed);
 	if (enemySpawnDelay <= 0.f) {
 		enemySpawnDelay = enemySpawnDelayAmount;
 		AddEnemy();

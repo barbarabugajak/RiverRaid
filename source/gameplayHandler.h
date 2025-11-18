@@ -12,7 +12,15 @@
 #include "../source/textObject.h"
 
 class GameplayHandler {
+
 public:
+
+    // ===== ASSETS ========
+    const char* PLANE_ASSET_SOURCE = "source/assets/plane.png";
+    const char* ENEMY_HELICOPTER_ASSET_SOURCE = "source/assets/helicopter.png";
+    const char* EXPLOSION_ASSETS_SOURCE = "source/assets/explosion.png";
+
+    // ==== MEMBERS ========
     Plane player;
     std::vector<Bullet> Bullets;
     std::vector<Enemy> Enemies;
@@ -23,10 +31,9 @@ public:
     const int enemySpawnDelayAmount = 250;
     int enemySpawnDelay = enemySpawnDelayAmount;
     int score = 0;
-    TTF_Font* font;
 
     GameplayHandler()
-        : player("plane", "source/assets/plane.png", renderer,
+        : player("plane", PLANE_ASSET_SOURCE, renderer,
             0, 0, 100, 100, 150, 10) {
 
         player.velX = 0;
@@ -35,7 +42,6 @@ public:
         player.gameplayHandler = this;
         scoreText.sprite.x = (WIDTH - scoreText.sprite.w) / 2;
 
-        font = TTF_OpenFont("source/assets/arial.ttf", 24);
         if (!font) {
             SDL_Log("Couldn't open font: %s\n", SDL_GetError());
         }
@@ -48,7 +54,7 @@ public:
     void UpdateEnemies(float dt);
     void Render();
     void CheckCollisions();
-    void SpawnExplosionSpecialEffect(int posX, int posY);
+    void SpawnExplosionSpecialEffect(float posX, float posY);
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
 
@@ -59,3 +65,8 @@ public:
 
 
 };
+
+
+namespace LetsHaveSomeFun {
+
+}
