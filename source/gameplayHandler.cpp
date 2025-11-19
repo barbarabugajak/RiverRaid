@@ -122,7 +122,7 @@ void GameplayHandler::CheckCollisions() {
 			if (CheckIfObjectsIntersect(Bullets[j], Enemies[i])) {
 				Bullets.erase(Bullets.begin() + j);
 				Enemies.erase(Enemies.begin() + i);
-				score += SCORE_FOR_ENEMY_DESTRUCTION + SCORE_FOR_ENEMY_DESTRUCTION*((int)(worldSpeed/maxWorldSpeed));
+				score += SCORE_FOR_ENEMY_DESTRUCTION + (int)(SCORE_FOR_ENEMY_DESTRUCTION*(worldSpeed/maxWorldSpeed));
 				break;
 			}
 
@@ -166,7 +166,7 @@ void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
 
 void GameplayHandler::UpdateFuel(float dt) {
 
-	player.fuelCount -=  worldSpeed * (float)(abs(player.velY)) * dt * FUELL_LOSS_COEFFICIENT; 
+	player.fuelCount -=  worldSpeed * dt * FUELL_LOSS_COEFFICIENT; 
 	if (player.fuelCount <= 0.f) {
 		bShouldQuit = true;
 	}

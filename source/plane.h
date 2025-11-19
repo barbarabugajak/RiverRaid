@@ -26,6 +26,8 @@ public:
 
 	void MoveX(float dt);
 
+	void MoveY(float dt);
+
 	void GetMovementInput(float dt);
 
 	void Shoot();

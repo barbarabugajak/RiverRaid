@@ -5,13 +5,13 @@ constexpr int WIDTH = 720;
 constexpr int HEIGHT = 1080;
 
 extern float worldSpeed;
-constexpr float maxWorldSpeed = 500;
+constexpr float maxWorldSpeed = 600;
 constexpr float minWorldSpeed = 300;
 
 constexpr int SCORE_FOR_ENEMY_DESTRUCTION = 10;
 
-constexpr float FUELL_LOSS_COEFFICIENT = 0.005f;
-constexpr int FUEL_PROBABILITY = 20;
+constexpr float FUELL_LOSS_COEFFICIENT = 0.01f;
+constexpr int FUEL_PROBABILITY = 10;
 
 constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
 

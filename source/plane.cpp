@@ -10,15 +10,28 @@
 #include <vector>
 
 void Plane::MoveX(float dt) {
-		// X-Axis Input bounds
-		if (velX < 0) {
-			sprite.x = std::max(sprite.x + (velX * speedX * dt), (WIDTH / 6.0f));
-		}
-		if (velX > 0) {
-			sprite.x = std::min(sprite.x + (velX * speedX * dt), (WIDTH - (WIDTH / 6.0f) - (sprite.w)));
-		}
 
+	if (velX < 0) {
+		sprite.x = std::max(sprite.x + (velX * speedX * dt), (WIDTH / 6.0f));
 	}
+	if (velX > 0) {
+		sprite.x = std::min(sprite.x + (velX * speedX * dt), (WIDTH - (WIDTH / 6.0f) - (sprite.w)));
+	}
+}
+
+void Plane::MoveY(float dt) {
+
+	if (velY > 0) {
+		worldSpeed = std::min((float)maxWorldSpeed, (worldSpeed + speedY*dt));
+	}
+	else if (velY < 0) {
+		worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - 1.5f*speedY*dt));
+	}
+	else if (velY == 0) {
+		worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - speedY * 0.3f * dt));
+	} 
+
+}
 
 void Plane::GetMovementInput(float dt) {
 
@@ -36,21 +49,20 @@ void Plane::GetMovementInput(float dt) {
 			velX = 0;
 		}
 
-		// They cancel out 
 		if ((key_states[SDL_SCANCODE_A] && key_states[SDL_SCANCODE_D])) {
 			velX = 0;
 		}
 
 		if (key_states[SDL_SCANCODE_W]) {
-			worldSpeed = std::min((float)maxWorldSpeed, (worldSpeed + speedY));
+			velY = 1.0f;
 		}
 
 		if (key_states[SDL_SCANCODE_S]) {
-			worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - speedY));
+			velY = -1.0f;
 		}
 
 		if (!key_states[SDL_SCANCODE_W] && !key_states[SDL_SCANCODE_S]) {
-			worldSpeed = std::max((float)minWorldSpeed, (worldSpeed - speedY * 0.5f));
+			velY = 0;
 		}
 
 		if (key_states[SDL_SCANCODE_SPACE]) {
@@ -73,6 +85,7 @@ void Plane::Tick(float dt) {
 
 		GetMovementInput(dt);
 		MoveX(dt);
+		MoveY(dt);
 
 		if (isShooting && shootDelay <= 0.f) {
 			Shoot();

@@ -39,7 +39,7 @@ public:
 
     GameplayHandler()
         : player("plane", PLANE_ASSET_SOURCE, renderer,
-            0, 0, 100, 100, 150, 5) {
+            0, 0, 100, 100, 150, 100) {
 
         player.velX = 0;
         player.sprite.x = (WIDTH / 2) - (player.sprite.w / 2);

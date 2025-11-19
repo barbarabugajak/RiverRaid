@@ -12,7 +12,6 @@ public:
     using GameObject::GameObject;
 
     void Tick(float dt) override {
-        std::cout << velY << std::endl;
         MoveY(velY * worldSpeed * dt);
     };
     bool CheckBounds() {
