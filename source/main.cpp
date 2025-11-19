@@ -81,6 +81,20 @@ int main(int argc, char* argv[]) {
 				gameplayHandler.CheckIfAnyButtonWasClicked();
 				break;
 			}
+
+			if (event.type == SDL_EVENT_KEY_DOWN) {
+				if (event.key.key == SDLK_ESCAPE) {
+
+					bIsPaused = !bIsPaused;
+					gameplayHandler.bShowUI = !gameplayHandler.bShowUI;
+					if (bIsPaused) {
+						SDL_ShowCursor();
+					}
+					else {
+						SDL_HideCursor();
+					}
+				}
+			}
 		}		
 		
 			Uint64 now = SDL_GetPerformanceCounter();
