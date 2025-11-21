@@ -20,6 +20,14 @@ void GameplayHandler::Quit() {
 	bShouldQuit = true;
 }
 
+void GameplayHandler::GameOver(){
+	bGameOver = true;
+	Buttons.clear();
+	SDL_ShowCursor();
+	Buttons.emplace_back(Button((WIDTH - 200.0f) / 2, HEIGHT / 2.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!"));
+	bShowUI = true;
+}
+
 void GameplayHandler::AddEnemy() {
 	
 	float enemyX = WIDTH / 6;
@@ -114,7 +122,7 @@ void GameplayHandler::CheckCollisions() {
 	for (int i = (int)Enemies.size() - 1; i >= 0; i--) {
 
 		if (CheckIfObjectsIntersect(player, Enemies[i])) {
-			bShouldQuit = true;
+			GameOver();
 		}
 
 		for (int j = (int)Bullets.size() - 1; j >= 0; j--) {
@@ -143,7 +151,7 @@ void GameplayHandler::CheckCollisions() {
 
 			if (CheckIfObjectsIntersect(player, FuelBarrels[i])) {
 
-				bShouldQuit = true;
+				GameOver();
 				break;
 			}
 
@@ -168,7 +176,7 @@ void GameplayHandler::UpdateFuel(float dt) {
 
 	player.fuelCount -=  worldSpeed * dt * FUELL_LOSS_COEFFICIENT; 
 	if (player.fuelCount <= 0.f) {
-		bShouldQuit = true;
+		GameOver();
 	}
 }
 
@@ -210,14 +218,16 @@ void GameplayHandler::Tick(float dt) {
 
 		currentSpawnDelayValue = spawnDelay;
 	};
-	player.Tick(dt);
 
-	UpdateEnemies(dt);
-	UpdateBullets(dt);
-	UpdateFuel(dt);
+	if (!bGameOver) {
+		player.Tick(dt);
+		UpdateFuel(dt);
+		CheckCollisions();
+		UpdateBullets(dt);
+	}
+
 	UpdateFuelBarrels(dt);
-	CheckCollisions();
-	
+	UpdateEnemies(dt);
 	
 }
 
@@ -245,10 +255,12 @@ void GameplayHandler::Render() {
 		FuelBarrels[i].Render(renderer);
 	}
 
-	player.Render(renderer);
-
-	scoreText.Render();
-	fuelText.Render();
+	if (!bGameOver) {
+		player.Render(renderer);
+	}
+		scoreText.Render();
+		fuelText.Render();
+	
 
 	if (bShowUI) {
 		for (int i = 0; i < Buttons.size(); i++) {

@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
 			}
 
 			if (event.type == SDL_EVENT_KEY_DOWN) {
-				if (event.key.key == SDLK_ESCAPE) {
+				if (event.key.key == SDLK_ESCAPE && !gameplayHandler.bGameOver) {
 
 					bIsPaused = !bIsPaused;
 					gameplayHandler.bShowUI = !gameplayHandler.bShowUI;

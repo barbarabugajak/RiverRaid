@@ -69,6 +69,8 @@ public:
 
     void CheckIfAnyButtonWasClicked();
     bool bShowUI = true;
+    bool bGameOver = false;
+    void GameOver();
     static void TogglePause();
     static void Quit();
 
