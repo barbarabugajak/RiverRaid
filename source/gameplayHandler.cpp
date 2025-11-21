@@ -137,7 +137,7 @@ void GameplayHandler::CheckCollisions() {
 
 				Bullets.erase(Bullets.begin() + j);
 				FuelBarrels.erase(FuelBarrels.begin() + i);
-				player.fuelCount = 99.99f;
+				player.fuelCount = std::min(player.fuelCount + 50.0f, 99.99f);
 				break;
 			}
 
