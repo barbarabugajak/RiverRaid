@@ -51,6 +51,9 @@
     <ClCompile Include="source\textObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="source\enviroObject.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\textures.h">
@@ -87,6 +90,9 @@
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
     <ClInclude Include="source\fuelBarrel.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enviroObject.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

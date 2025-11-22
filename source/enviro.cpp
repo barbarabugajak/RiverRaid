@@ -5,6 +5,12 @@
 
 #include "../source/globals.h"
 
+const char* texture_sources[3] = {
+	"source/assets/tree1.png",
+	"source/assets/tree2.png",
+	"source/assets/stone1.png"
+};
+
 SDL_FRect grass_L;
 SDL_FRect grass_R;
 
@@ -22,7 +28,6 @@ void PrepareEnviro() {
 	grass_R.h = HEIGHT;
 
 }
-
 
 void DrawEnviro() {
 

@@ -12,6 +12,7 @@ constexpr int SCORE_FOR_ENEMY_DESTRUCTION = 10;
 
 constexpr float FUELL_LOSS_COEFFICIENT = 0.01f;
 constexpr int FUEL_PROBABILITY = 10;
+constexpr int ENVIRO_PROBABILITY = 30;
 
 constexpr float TARGET_FRAME_TIME = 1.0f / 60.f;
 

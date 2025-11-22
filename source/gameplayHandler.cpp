@@ -100,6 +100,7 @@ void GameplayHandler::Init() {
 	Buttons.reserve(2);
 	Enemies.reserve(10);
 	FuelBarrels.reserve(10);
+	EnviroObjects.reserve(5);
 
 	// Create and show UI
 	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f + HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::TogglePause, 0.f, 0.7f, 0.f, "Play!");
@@ -161,15 +162,27 @@ void GameplayHandler::CheckCollisions() {
 }
 
 void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
+}
 
-	OtherObjects.emplace_back(GameObject(
-		"explosion",
-		EXPLOSION_ASSETS_SOURCE,
+void GameplayHandler::SpawnEnviroObject() {
+
+	float posX;
+	
+	if (SDL_randf() < 0.5f) {
+		posX = 0.f;
+	} else {
+		posX = WIDTH - 110;
+	}
+	
+	Sint32 index = SDL_rand(6);
+
+	std::cout << "Num: \n" << ENVIRO_ASSETS_SOURCES[index] << std::endl;
+
+	EnviroObjects.emplace_back(EnviroObject("explosion",
+		ENVIRO_ASSETS_SOURCES[index],
 		renderer,
-		posX, posY, 100, 50, 0, 0));
-
-	std::cout << "Boom" << std::endl;
-
+		posX, index, 100, 100, 0, 0));
+	EnviroObjects.back().velY = 1.f;
 }
 
 void GameplayHandler::UpdateFuel(float dt) {
@@ -195,6 +208,20 @@ void GameplayHandler::UpdateFuelBarrels(float dt) {
 
 }
 
+void GameplayHandler::UpdateOtherObjects(float dt) {
+
+	for (int i = (int)EnviroObjects.size() - 1; i >= 0; i--) {
+
+		EnviroObjects[i].Tick(TARGET_FRAME_TIME);
+
+		if (!EnviroObjects[i].CheckBounds()) {
+
+			EnviroObjects.erase(EnviroObjects.begin() + i);
+
+		}
+	}
+}
+
 void GameplayHandler::AddFuelBarrel() {
 	float barrelX = WIDTH / 6;
 	barrelX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
@@ -216,6 +243,12 @@ void GameplayHandler::Tick(float dt) {
 			AddEnemy();
 		}
 
+		rand = SDL_rand(100);
+
+		if ((rand <= ENVIRO_PROBABILITY && EnviroObjects.size() < 4) || EnviroObjects.size() == 0) {
+			SpawnEnviroObject();
+		}
+
 		currentSpawnDelayValue = spawnDelay;
 	};
 
@@ -223,11 +256,13 @@ void GameplayHandler::Tick(float dt) {
 		player.Tick(dt);
 		UpdateFuel(dt);
 		CheckCollisions();
-		UpdateBullets(dt);
+		
 	}
 
+	UpdateBullets(dt);
 	UpdateFuelBarrels(dt);
 	UpdateEnemies(dt);
+	UpdateOtherObjects(dt);
 	
 }
 
@@ -247,19 +282,24 @@ void GameplayHandler::Render() {
 		Enemies[i].Render(renderer);
 	}
 
-	for (int i = 0; i < OtherObjects.size(); i++) {
-		OtherObjects[i].Render(renderer);
+	for (int i = 0; i < EnviroObjects.size(); i++) {
+		EnviroObjects[i].Render(renderer);
 	}
 
 	for (int i = 0; i < FuelBarrels.size(); i++) {
 		FuelBarrels[i].Render(renderer);
 	}
 
+	for (int i = 0; i < EnviroObjects.size(); i++) {
+		EnviroObjects[i].Render(renderer);
+	}
+
 	if (!bGameOver) {
 		player.Render(renderer);
 	}
-		scoreText.Render();
-		fuelText.Render();
+	
+	scoreText.Render();
+	fuelText.Render();
 	
 
 	if (bShowUI) {

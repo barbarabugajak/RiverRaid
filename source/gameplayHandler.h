@@ -11,6 +11,7 @@
 #include "../source/button.h"
 #include "../source/textObject.h"
 #include "../source/fuelBarrel.h"
+#include "../source/enviroObject.h"
 
 class GameplayHandler {
 
@@ -21,13 +22,22 @@ public:
     const char* ENEMY_HELICOPTER_ASSET_SOURCE = "source/assets/helicopter.png";
     const char* EXPLOSION_ASSETS_SOURCE = "source/assets/explosion.png";
     const char* FUEL_BARREL_ASSET_SOURCE = "source/assets/fuel.png";
+    const char* ENVIRO_ASSETS_SOURCES[7] = {
+        "source/assets/tree1.png",
+        "source/assets/tree2.png",
+        "source/assets/stone1.png",
+        "source/assets/camp1.png",
+        "source/assets/flowers1.png",
+        "source/assets/flowers2.png",
+        "source/assets/flowers3.png",
+    };
 
     // ==== MEMBERS ========
     Plane player;
     std::vector<Bullet> Bullets;
     std::vector<Enemy> Enemies;
     std::vector<FuelBarrel> FuelBarrels;
-    std::vector<GameObject> OtherObjects;
+    std::vector<EnviroObject> EnviroObjects;
     std::vector<Button> Buttons;
     TextObject<int> scoreText{ "Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
     TextObject<float> fuelText{"Fuel: %.2f", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, player.fuelCount };
@@ -59,11 +69,13 @@ public:
     void Tick(float dt);
     void UpdateBullets(float dt);
     void UpdateEnemies(float dt);
+    void UpdateOtherObjects(float dt);
     void UpdateFuelBarrels(float dt);
     void UpdateFuel(float dt);
     void Render();
     void CheckCollisions();
     void SpawnExplosionSpecialEffect(float posX, float posY);
+    void SpawnEnviroObject();
 
     bool CheckIfObjectsIntersect(GameObject& o1, GameObject& o2);
 
