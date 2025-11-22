@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="miniaudio\miniaudio.c" />
     <ClCompile Include="source\animatedObject.cpp" />
     <ClCompile Include="source\bullet.cpp" />
     <ClCompile Include="source\button.cpp" />

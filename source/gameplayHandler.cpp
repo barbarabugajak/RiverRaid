@@ -92,8 +92,6 @@ bool GameplayHandler::CheckIfObjectsIntersect(GameObject& o1, GameObject& o2) {
 }
 
 void GameplayHandler::Init() {
-	// First initial wave
-	AddEnemy();
 
 	// For memory efficiency
 	Bullets.reserve(MAX_BULLET_AMOUNT);
@@ -175,8 +173,6 @@ void GameplayHandler::SpawnEnviroObject() {
 	}
 	
 	Sint32 index = SDL_rand(6);
-
-	std::cout << "Num: \n" << ENVIRO_ASSETS_SOURCES[index] << std::endl;
 
 	EnviroObjects.emplace_back(EnviroObject("explosion",
 		ENVIRO_ASSETS_SOURCES[index],

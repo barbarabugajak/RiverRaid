@@ -7,6 +7,8 @@
 #include <SDL3/SDL_keycode.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_ttf/SDL_textengine.h>
+// Miniaudio
+#include "../miniaudio/miniaudio.h"
 // Project headers
 #include "../source/textures.h"
 #include "../source/gameObject.h"
@@ -21,6 +23,27 @@
 // Generic
 #include <iostream>
 #include <vector>
+
+void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
+{
+	ma_decoder* pDecoder = (ma_decoder*)pDevice->pUserData;
+
+	ma_uint64 framesRead = 0;
+	ma_result result = ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, &framesRead); 
+
+	// If fewer frames were read than requested
+	if (framesRead < frameCount) {
+		// Reset to beginning of the file 
+		ma_decoder_seek_to_pcm_frame(pDecoder, 0);
+
+		// Fill the remaning empty space in the buffer
+		ma_uint64 extraFramesRead = 0;
+		ma_decoder_read_pcm_frames(pDecoder, 
+			(void*)((ma_uint64)(pOutput) + framesRead * pDecoder->outputChannels),  // To prevent overwriting
+			frameCount - framesRead,
+			&extraFramesRead);
+	}
+}
 
 int main(int argc, char* argv[]) {
 
@@ -51,6 +74,33 @@ int main(int argc, char* argv[]) {
 
 	LoadFont();
 
+	// Miniaudio
+	ma_device_config config = ma_device_config_init(ma_device_type_playback);
+	ma_decoder pDecoder;
+
+	config.playback.format = ma_format_s16;
+	config.playback.channels = 2;
+	config.sampleRate = 48000;
+	config.dataCallback = data_callback;
+	config.pUserData = &pDecoder;
+
+	ma_device device;
+	if (ma_device_init(NULL, &config, &device) != MA_SUCCESS) {
+		std::cout << "\n Audio device initialization failed \n";
+		return -1;
+	}
+
+	const char* BACKGROUND_MUSIC_ASSET_PATH = "assets/audio/game-8-bit.wav";
+	ma_result fileResult = ma_decoder_init_file(BACKGROUND_MUSIC_ASSET_PATH, NULL, &pDecoder);
+	if (fileResult != MA_SUCCESS) {
+		std::cout << "\n Wav import errors: " << fileResult << "\n";
+		return -1;
+	}
+
+	ma_data_source_set_looping(&pDecoder, MA_TRUE);
+
+	ma_device_start(&device);
+
 	float red = 0.0f, green = 0.1f, blue = 0.7f, alpha = 1.0f;
 	PrepareEnviro();
 
@@ -62,8 +112,9 @@ int main(int argc, char* argv[]) {
 	Uint64 startTime = SDL_GetTicks();
 	int frameCount = 0;
 
-	
 	SDL_ShowCursor();
+	SDL_ShowCursor();
+
 	// Game loop
 	while (!bShouldQuit) {
 
@@ -136,6 +187,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Shutdown
+	ma_device_uninit(&device);
+	ma_decoder_uninit(&pDecoder);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
