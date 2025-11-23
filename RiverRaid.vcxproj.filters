@@ -54,7 +54,7 @@
     <ClCompile Include="source\enviroObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="miniaudio\miniaudio.c">
+    <ClCompile Include="libs\miniaudio\miniaudio.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>

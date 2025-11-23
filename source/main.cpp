@@ -3,12 +3,12 @@
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_render.h>
-#include <SDL3_image/SDL_image.h>
+#include "../libs/SDL3_image-3.2.4/include/SDL3_image/SDL_image.h"
 #include <SDL3/SDL_keycode.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_ttf/SDL_textengine.h>
 // Miniaudio
-#include "../miniaudio/miniaudio.h"
+#include "../libs/miniaudio/miniaudio.h"
 // Project headers
 #include "../source/textures.h"
 #include "../source/gameObject.h"

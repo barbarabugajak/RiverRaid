@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="miniaudio\miniaudio.c" />
+    <ClCompile Include="libs\miniaudio\miniaudio.c" />
     <ClCompile Include="source\animatedObject.cpp" />
     <ClCompile Include="source\bullet.cpp" />
     <ClCompile Include="source\button.cpp" />
@@ -102,7 +102,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(SolutionDir)SDL3-3.2.24\lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)libs\SDL3-3.2.24\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,12 +136,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL3_ttf-3.2.2\include;$(SolutionDir)SDL3-3.2.24\include;$(SolutionDir)SDL3_image-3.2.4\include;$(SolutionDir)source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\SDL3_ttf-3.2.2\include;$(SolutionDir)libs\SDL3-3.2.24\include;$(SolutionDir)libs\SDL3_image-3.2.4\include;$(SolutionDir)source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)SDL3_ttf-3.2.2\lib\x64;$(SolutionDir)SDL3_image-3.2.4\lib\x64;$(SolutionDir)SDL3-3.2.24\lib\x64;$(SolutionDir)source;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\SDL3_ttf-3.2.2\lib\x64;$(SolutionDir)libs\SDL3_image-3.2.4\lib\x64;$(SolutionDir)libs\SDL3-3.2.24\lib\x64;$(SolutionDir)source;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -153,12 +153,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL3-3.2.24\include;$(SolutionDir)SDL3_image-3.2.4\include;$(SolutionDir)source;$(SolutionDir)SDL3_ttf-3.2.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\SDL3-3.2.24\include;$(SolutionDir)libs\SDL3_image-3.2.4\include;$(SolutionDir)source;$(SolutionDir)libs\SDL3_ttf-3.2.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)SDL3_image-3.2.4\lib\x64;$(SolutionDir)SDL3-3.2.24\lib\x64;$(SolutionDir)source;$(SolutionDir)SDL3_ttf-3.2.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\SDL3_image-3.2.4\lib\x64;$(SolutionDir)libs\SDL3-3.2.24\lib\x64;$(SolutionDir)source;$(SolutionDir)libs\SDL3_ttf-3.2.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies) SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

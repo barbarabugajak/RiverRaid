@@ -176,9 +176,9 @@ void GameplayHandler::SpawnEnviroObject() {
 	Sint32 index = SDL_rand(6);
 
 	EnviroObjects.emplace_back(EnviroObject("explosion",
-		ENVIRO_ASSETS_SOURCES[index],
+		ENVIRO_ASSETS_SOURCES[(int)(index)],
 		renderer,
-		posX, index, 100, 100, 0, 0));
+		posX, (float)(index), 100, 100, 0, 0));
 	EnviroObjects.back().velY = 1.f;
 }
 
