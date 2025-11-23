@@ -22,7 +22,7 @@ void SetupWindowAndRenderer() {
 
 }
 
-const char* FONT_ASSET_SOURCE = "source/assets/arial.ttf";
+const char* FONT_ASSET_SOURCE = "assets/graphic/arial.ttf";
 
 void LoadFont() {
 

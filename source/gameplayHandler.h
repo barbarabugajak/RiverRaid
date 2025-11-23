@@ -18,18 +18,18 @@ class GameplayHandler {
 public:
 
     // ===== ASSETS ========
-    const char* PLANE_ASSET_SOURCE = "source/assets/plane.png";
-    const char* ENEMY_HELICOPTER_ASSET_SOURCE = "source/assets/helicopter.png";
-    const char* EXPLOSION_ASSETS_SOURCE = "source/assets/explosion.png";
-    const char* FUEL_BARREL_ASSET_SOURCE = "source/assets/fuel.png";
+    const char* PLANE_ASSET_SOURCE = "assets/graphic/plane.png";
+    const char* ENEMY_HELICOPTER_ASSET_SOURCE = "assets/graphic/helicopter.png";
+    const char* EXPLOSION_ASSETS_SOURCE = "assets/graphic/explosion.png";
+    const char* FUEL_BARREL_ASSET_SOURCE = "assets/graphic/fuel.png";
     const char* ENVIRO_ASSETS_SOURCES[7] = {
-        "source/assets/tree1.png",
-        "source/assets/tree2.png",
-        "source/assets/stone1.png",
-        "source/assets/camp1.png",
-        "source/assets/flowers1.png",
-        "source/assets/flowers2.png",
-        "source/assets/flowers3.png",
+        "assets/graphic/tree1.png",
+        "assets/graphic/tree2.png",
+        "assets/graphic/stone1.png",
+        "assets/graphic/camp1.png",
+        "assets/graphic/flowers1.png",
+        "assets/graphic/flowers2.png",
+        "assets/graphic/flowers3.png",
     };
 
     // ==== MEMBERS ========
@@ -39,7 +39,7 @@ public:
     std::vector<FuelBarrel> FuelBarrels;
     std::vector<EnviroObject> EnviroObjects;
     std::vector<Button> Buttons;
-    TextObject<int> scoreText{ "Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
+    TextObject<int> scoreText{ "Scosre: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
     TextObject<float> fuelText{"Fuel: %.2f", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, player.fuelCount };
 
     const int spawnDelay = 200;

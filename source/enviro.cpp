@@ -6,9 +6,9 @@
 #include "../source/globals.h"
 
 const char* texture_sources[3] = {
-	"source/assets/tree1.png",
-	"source/assets/tree2.png",
-	"source/assets/stone1.png"
+	"assets/graphic/tree1.png",
+	"assets/graphic/tree2.png",
+	"assets/graphic/stone1.png"
 };
 
 SDL_FRect grass_L;
