@@ -138,6 +138,12 @@ void GameplayHandler::CheckCollisions() {
 
 	for (int i = (int)FuelBarrels.size() - 1; i >= 0; i--) {
 
+		if (CheckIfObjectsIntersect(player, FuelBarrels[i])) {
+
+			GameOver();
+			break;
+		}
+
 		for (int j = (int)Bullets.size() - 1; j >= 0; j--) {
 
 			if (CheckIfObjectsIntersect(Bullets[j], FuelBarrels[i])) {
@@ -148,11 +154,6 @@ void GameplayHandler::CheckCollisions() {
 				break;
 			}
 
-			if (CheckIfObjectsIntersect(player, FuelBarrels[i])) {
-
-				GameOver();
-				break;
-			}
 
 		}
 	}
