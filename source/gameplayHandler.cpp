@@ -129,6 +129,9 @@ void GameplayHandler::CheckCollisions() {
 			if (CheckIfObjectsIntersect(Bullets[j], Enemies[i])) {
 				Bullets.erase(Bullets.begin() + j);
 				Enemies.erase(Enemies.begin() + i);
+
+				bIsExploding = true;
+
 				score += SCORE_FOR_ENEMY_DESTRUCTION + (int)(SCORE_FOR_ENEMY_DESTRUCTION*(worldSpeed/maxWorldSpeed));
 				break;
 			}

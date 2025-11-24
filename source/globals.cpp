@@ -11,6 +11,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 TTF_Font* font = NULL;
 extern float worldSpeed = 250;
+extern bool bIsExploding = false;
 bool bShouldQuit = false;
 bool bIsPaused = true;
 

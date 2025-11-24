@@ -28,3 +28,5 @@ void SetupWindowAndRenderer();
 
 extern TTF_Font* font;
 void LoadFont();
+
+extern bool bIsExploding;

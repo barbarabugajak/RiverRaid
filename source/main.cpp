@@ -24,12 +24,21 @@
 #include <iostream>
 #include <vector>
 
+#define MAX_MA_INT_16 32767
+
+ma_decoder explosionDecoder;
+
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 {
+	ma_int16* output = (ma_int16*)(pOutput);
+
 	ma_decoder* pDecoder = (ma_decoder*)pDevice->pUserData;
 
 	ma_uint64 framesRead = 0;
-	ma_result result = ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, &framesRead); 
+	ma_uint64 explosionFramesRead = 0;
+
+	ma_int16 buffer_music[4800];
+	ma_result result = ma_decoder_read_pcm_frames(pDecoder, buffer_music, frameCount, &framesRead);
 
 	// If fewer frames were read than requested
 	if (framesRead < frameCount) {
@@ -42,6 +51,35 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 			(void*)((ma_uint64)(pOutput) + framesRead * pDecoder->outputChannels),  // To prevent overwriting
 			frameCount - framesRead,
 			&extraFramesRead);
+
+		framesRead = +extraFramesRead;
+	}
+
+	
+	for (int i = 0; i < framesRead*2; i++) {
+		output[i] = (ma_int16)buffer_music[i];
+	}
+
+	if (bIsExploding) {
+		ma_int16 buffer_explosion[4800];
+
+		result = ma_decoder_read_pcm_frames(&explosionDecoder, buffer_explosion, frameCount, &explosionFramesRead);
+
+		if (explosionFramesRead < frameCount) {
+			bIsExploding = false;
+			ma_decoder_seek_to_pcm_frame(&explosionDecoder, 0);
+		}
+
+		if (!bIsExploding) return;
+
+		for (int i = 0; i < framesRead * 2; i++) {
+			int temp = buffer_music[i] + buffer_explosion[i];
+
+			if (temp > MAX_MA_INT_16) temp = MAX_MA_INT_16;
+			if (temp < -MAX_MA_INT_16) temp = -MAX_MA_INT_16;
+
+			output[i] = temp;
+		}
 	}
 }
 
@@ -92,6 +130,13 @@ int main(int argc, char* argv[]) {
 
 	const char* BACKGROUND_MUSIC_ASSET_PATH = "assets/audio/game-8-bit.wav";
 	ma_result fileResult = ma_decoder_init_file(BACKGROUND_MUSIC_ASSET_PATH, NULL, &pDecoder);
+	if (fileResult != MA_SUCCESS) {
+		std::cout << "\n Wav import errors: " << fileResult << "\n";
+		return -1;
+	}
+
+	const char* EXPLOSION_SOUND_ASSET_PATH = "assets/audio/explosion.wav";
+	fileResult = ma_decoder_init_file(EXPLOSION_SOUND_ASSET_PATH, NULL, &explosionDecoder);
 	if (fileResult != MA_SUCCESS) {
 		std::cout << "\n Wav import errors: " << fileResult << "\n";
 		return -1;
