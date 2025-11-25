@@ -174,20 +174,25 @@ int main(int argc, char* argv[]) {
 			}
 
 			if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-				gameplayHandler.CheckIfAnyButtonWasClicked();
-				break;
+				if (event.button.button == SDL_BUTTON_LEFT && gameplayHandler.bShowUI) {
+					gameplayHandler.CheckIfAnyButtonWasClicked();
+					break;
+				}
 			}
 
 			if (event.type == SDL_EVENT_KEY_DOWN) {
+
 				if (event.key.key == SDLK_ESCAPE && !gameplayHandler.bGameOver) {
 
-					bIsPaused = !bIsPaused;
-					gameplayHandler.bShowUI = !gameplayHandler.bShowUI;
 					if (bIsPaused) {
-						SDL_ShowCursor();
+						SDL_HideCursor();
+						bIsPaused = false;
+						gameplayHandler.bShowUI = false;
 					}
 					else {
-						SDL_HideCursor();
+						SDL_ShowCursor();
+						bIsPaused = true;
+						gameplayHandler.bShowUI = true;
 					}
 				}
 			}

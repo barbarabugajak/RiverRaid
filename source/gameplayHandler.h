@@ -39,7 +39,7 @@ public:
     std::vector<FuelBarrel> FuelBarrels;
     std::vector<EnviroObject> EnviroObjects;
     std::vector<Button> Buttons;
-    TextObject<int> scoreText{ "Scosre: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
+    TextObject<int> scoreText{ "Score: %d", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, score };
     TextObject<float> fuelText{"Fuel: %.2f", WIDTH / 2.f, HEIGHT - 100, 150.0f, 50.f, 255, 255, 255, player.fuelCount };
 
     const int spawnDelay = 200;

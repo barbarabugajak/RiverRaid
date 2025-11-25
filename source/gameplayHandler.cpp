@@ -24,7 +24,7 @@ void GameplayHandler::GameOver(){
 	bGameOver = true;
 	Buttons.clear();
 	SDL_ShowCursor();
-	Buttons.emplace_back(Button((WIDTH - 200.0f) / 2, HEIGHT / 2.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!"));
+	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!");
 	bShowUI = true;
 }
 
@@ -32,7 +32,7 @@ void GameplayHandler::AddEnemy() {
 	
 	float enemyX = WIDTH / 6;
 	enemyX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
-	Enemies.emplace_back(Enemy("enemy", ENEMY_HELICOPTER_ASSET_SOURCE, renderer, enemyX, -50, 100, 75, 0, 300));
+	Enemies.emplace_back("enemy", ENEMY_HELICOPTER_ASSET_SOURCE, renderer, enemyX, -50.f, 100.f, 75.f, 0.f, 300.f);
 	Enemies.back().velY = 1.f;
 
 }
@@ -101,9 +101,9 @@ void GameplayHandler::Init() {
 	EnviroObjects.reserve(5);
 
 	// Create and show UI
-	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f + HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::TogglePause, 0.f, 0.7f, 0.f, "Play!");
+	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f - HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::TogglePause, 0.f, 0.7f, 0.f, "Play!");
 
-	Buttons.emplace_back(Button((WIDTH - 200.0f) / 2, HEIGHT / 2.f - HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!"));
+	Buttons.emplace_back((WIDTH - 200.0f) / 2, HEIGHT / 2.f + HEIGHT / 20.f, 200.f, 60.f, &GameplayHandler::Quit, 0.5f, 0.f, 0.f, "Quit!");
 
 
 }
