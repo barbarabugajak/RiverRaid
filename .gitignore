@@ -364,6 +364,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Extempt SDL lib
-!SDL3-3.2.24/**
-!SDL3_image-3.2.4/**
-!SDL3_ttf-3.2.2/**
+!libs/SDL3-3.2.24/**
+!libs/SDL3_image-3.2.4/**
+!libs/SDL3_ttf-3.2.2/**

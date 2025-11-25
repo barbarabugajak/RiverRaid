@@ -151,6 +151,7 @@ void GameplayHandler::CheckCollisions() {
 
 			if (CheckIfObjectsIntersect(Bullets[j], FuelBarrels[i])) {
 
+				bIsExploding = true;
 				Bullets.erase(Bullets.begin() + j);
 				FuelBarrels.erase(FuelBarrels.begin() + i);
 				player.fuelCount = std::min(player.fuelCount + 50.0f, 99.99f);
@@ -225,7 +226,7 @@ void GameplayHandler::UpdateOtherObjects(float dt) {
 void GameplayHandler::AddFuelBarrel() {
 	float barrelX = WIDTH / 6;
 	barrelX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
-	FuelBarrels.emplace_back(FuelBarrel("fuelBarrel", FUEL_BARREL_ASSET_SOURCE, renderer, barrelX, -50, 75, 100, 10, 300));
+	FuelBarrels.emplace_back("fuelBarrel", FUEL_BARREL_ASSET_SOURCE, renderer, barrelX, -50.f, 75.f, 100.f, 10.f, 300.f);
 	FuelBarrels.back().velY = 1.f;
 }
 

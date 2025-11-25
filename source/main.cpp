@@ -48,7 +48,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 		// Fill the remaning empty space in the buffer
 		ma_uint64 extraFramesRead = 0;
 		ma_decoder_read_pcm_frames(pDecoder, 
-			(void*)((ma_uint64)(pOutput) + framesRead * pDecoder->outputChannels),  // To prevent overwriting
+			output + framesRead,  // To prevent overwriting
 			frameCount - framesRead,
 			&extraFramesRead);
 
@@ -128,14 +128,14 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	const char* BACKGROUND_MUSIC_ASSET_PATH = "assets/audio/game-8-bit.wav";
+	const char* BACKGROUND_MUSIC_ASSET_PATH = "assets/audio/background-music.wav";
 	ma_result fileResult = ma_decoder_init_file(BACKGROUND_MUSIC_ASSET_PATH, NULL, &pDecoder);
 	if (fileResult != MA_SUCCESS) {
 		std::cout << "\n Wav import errors: " << fileResult << "\n";
 		return -1;
 	}
 
-	const char* EXPLOSION_SOUND_ASSET_PATH = "assets/audio/explosion.wav";
+	const char* EXPLOSION_SOUND_ASSET_PATH = "assets/audio/explosion_sound.wav";
 	fileResult = ma_decoder_init_file(EXPLOSION_SOUND_ASSET_PATH, NULL, &explosionDecoder);
 	if (fileResult != MA_SUCCESS) {
 		std::cout << "\n Wav import errors: " << fileResult << "\n";
@@ -232,8 +232,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Shutdown
-	ma_device_uninit(&device);
 	ma_decoder_uninit(&pDecoder);
+	ma_device_uninit(&device);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
