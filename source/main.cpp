@@ -24,9 +24,10 @@
 #include <iostream>
 #include <vector>
 
-#define MAX_MA_INT_16 32767
-
 ma_decoder explosionDecoder;
+ma_int16 buffer_music[4800];
+ma_int16 buffer_explosion[4800];
+
 
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 {
@@ -37,18 +38,14 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 	ma_uint64 framesRead = 0;
 	ma_uint64 explosionFramesRead = 0;
 
-	ma_int16 buffer_music[4800];
 	ma_result result = ma_decoder_read_pcm_frames(pDecoder, buffer_music, frameCount, &framesRead);
 
-	// If fewer frames were read than requested
 	if (framesRead < frameCount) {
-		// Reset to beginning of the file 
 		ma_decoder_seek_to_pcm_frame(pDecoder, 0);
 
-		// Fill the remaning empty space in the buffer
 		ma_uint64 extraFramesRead = 0;
 		ma_decoder_read_pcm_frames(pDecoder, 
-			output + framesRead,  // To prevent overwriting
+			output + framesRead, 
 			frameCount - framesRead,
 			&extraFramesRead);
 
@@ -57,12 +54,11 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 
 	
 	for (int i = 0; i < framesRead*2; i++) {
-		output[i] = (ma_int16)buffer_music[i];
+		output[i] = (ma_int16)(buffer_music[i] * 0.25f);
 	}
 
 	if (bIsExploding) {
-		ma_int16 buffer_explosion[4800];
-
+		
 		result = ma_decoder_read_pcm_frames(&explosionDecoder, buffer_explosion, frameCount, &explosionFramesRead);
 
 		if (explosionFramesRead < frameCount) {
@@ -73,12 +69,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 		if (!bIsExploding) return;
 
 		for (int i = 0; i < framesRead * 2; i++) {
-			int temp = buffer_music[i] + buffer_explosion[i];
-
-			if (temp > MAX_MA_INT_16) temp = MAX_MA_INT_16;
-			if (temp < -MAX_MA_INT_16) temp = -MAX_MA_INT_16;
-
-			output[i] = temp;
+			output[i] += buffer_explosion[i]*0.25f;
 		}
 	}
 }
