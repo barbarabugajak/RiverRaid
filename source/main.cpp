@@ -69,7 +69,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 		if (!bIsExploding) return;
 
 		for (int i = 0; i < framesRead * 2; i++) {
-			output[i] += buffer_explosion[i]*0.25f;
+			output[i] += (ma_int16)(buffer_explosion[i]*0.25f);
 		}
 	}
 }
@@ -80,10 +80,12 @@ int main(int argc, char* argv[]) {
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		std::cout << "Video did not initialize properly" << "\n";
 		std::cout << SDL_GetError() << "\n";
-		return SDL_APP_FAILURE;
+		return SDL_APP_FAILURE;	
 	}
 	else {
+		#ifdef _DEBUG
 		std::cout << "Video initialized" << "\n";
+		#endif
 	};
 	
 	// Initialize SDL text library
@@ -93,7 +95,9 @@ int main(int argc, char* argv[]) {
 		return SDL_APP_FAILURE;
 	}
 	else {
+		#ifdef _DEBUG
 		std::cout << "Text initialized" << "\n";
+		#endif
 	};
 
 	SetupWindowAndRenderer();
@@ -219,8 +223,9 @@ int main(int argc, char* argv[]) {
 
 			if (elapsedTime >= 1.0f) {
 				float fps = frameCount / elapsedTime;
+				#ifdef _DEBUG
 				std::cout << "FPS: " << fps << "\n";
-
+				#endif
 				frameCount = 0;
 				startTime = currentTime;
 			}

@@ -1,8 +1,8 @@
 #pragma once
 #include <SDL3_ttf/SDL_ttf.h>
 
-constexpr int WIDTH = 720;
-constexpr int HEIGHT = 1080;
+constexpr int WIDTH = 648;
+constexpr int HEIGHT = 972;
 
 extern float worldSpeed;
 constexpr float maxWorldSpeed = 600;

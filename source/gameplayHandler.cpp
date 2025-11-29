@@ -32,7 +32,7 @@ void GameplayHandler::AddEnemy() {
 	
 	float enemyX = WIDTH / 6;
 	enemyX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
-	Enemies.emplace_back("enemy", ENEMY_HELICOPTER_ASSET_SOURCE, renderer, enemyX, -50.f, 100.f, 75.f, 0.f, 300.f);
+	Enemies.emplace_back("enemy", ENEMY_HELICOPTER_ASSET_SOURCE, renderer, enemyX, -50.f, 90.f, 67.f, 0.f, 300.f);
 	Enemies.back().velY = 1.f;
 
 }
@@ -226,7 +226,7 @@ void GameplayHandler::UpdateOtherObjects(float dt) {
 void GameplayHandler::AddFuelBarrel() {
 	float barrelX = WIDTH / 6;
 	barrelX += SDL_rand((Sint32)(WIDTH * (4.0f / 6.0f) - 110));
-	FuelBarrels.emplace_back("fuelBarrel", FUEL_BARREL_ASSET_SOURCE, renderer, barrelX, -50.f, 75.f, 100.f, 10.f, 300.f);
+	FuelBarrels.emplace_back("fuelBarrel", FUEL_BARREL_ASSET_SOURCE, renderer, barrelX, -50.f, 67.f, 90.f, 10.f, 300.f);
 	FuelBarrels.back().velY = 1.f;
 }
 
