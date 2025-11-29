@@ -8,7 +8,7 @@ https://github.com/user-attachments/assets/b8ea52d2-8985-448e-a023-94fa26e78da5
 
 ## 🕹️ How To Play
 
-Play on *itch.io*:  
+Play on *itch.io*:  https://barbug-dev.itch.io/river-raid
 
 **OR**  
 Download the source code from the latest release.
