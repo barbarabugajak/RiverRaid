@@ -27,9 +27,6 @@
     <ClCompile Include="source\globals.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="source\gameObject.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="source\plane.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -42,19 +39,19 @@
     <ClCompile Include="source\gameplayHandler.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="source\animatedObject.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="source\button.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="source\textObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="source\enviroObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="libs\miniaudio\miniaudio.c">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gameObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,9 +80,6 @@
     <ClInclude Include="source\gameplayHandler.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="source\animatedObject.h">
-      <Filter>Pliki źródłowe</Filter>
-    </ClInclude>
     <ClInclude Include="source\button.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
@@ -96,6 +90,9 @@
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
     <ClInclude Include="source\enviroObject.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

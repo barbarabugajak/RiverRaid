@@ -164,8 +164,6 @@ void GameplayHandler::CheckCollisions() {
 	
 }
 
-void GameplayHandler::SpawnExplosionSpecialEffect(float posX, float posY) {
-}
 
 void GameplayHandler::SpawnEnviroObject() {
 
@@ -302,7 +300,6 @@ void GameplayHandler::Render() {
 	scoreText.Render();
 	fuelText.Render();
 	
-
 	if (bShowUI) {
 		for (int i = 0; i < Buttons.size(); i++) {
 			Buttons[i].Render();
